@@ -14,6 +14,8 @@ router.get('/api', (req, res) => {
     })
 })
 
+app.use(router)
+
 mongoose.connect(MONGODB_CONNECTION_STRING).then(() => {
     console.log('connected to mongodb')
     app.listen(PORT, () => {
@@ -22,5 +24,3 @@ mongoose.connect(MONGODB_CONNECTION_STRING).then(() => {
 }).catch((error) => {
     console.log(`could not connect to mongodb: ${error}`)
 })
-
-app.use(router)
