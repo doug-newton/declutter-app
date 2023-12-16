@@ -12,6 +12,19 @@ export class LoginComponent {
 
   isLoggedIn$: Observable<boolean> = this.auth.isLoggedIn$
 
-  logIn(){
+  email: string = ''
+  password: string = ''
+
+  logIn() {
+    this.auth.login({
+      email: this.email,
+      password: this.password
+    })
+  }
+
+  detailsEntered(): boolean {
+    if (this.email == '') return false
+    if (this.password == '') return false
+    return true
   }
 }
