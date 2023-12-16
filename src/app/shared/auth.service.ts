@@ -30,6 +30,9 @@ export class AuthService {
 
   private loggedInUser: Subject<LoginResult | null> = new BehaviorSubject<LoginResult | null>(null)
   public isLoggedIn$: Observable<boolean> = this.loggedInUser.pipe(map(user => user != null))
+  public token$: Observable<string | null> = this.loggedInUser.pipe(
+    map(user => user == null ? null : user.token)
+  )
 
   login(credentials: UserCredentials) {
     this.http.post<LoginResult>('http://localhost:3000/api/user/login', credentials).subscribe({

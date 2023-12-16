@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatToolbarModule } from '@angular/material/toolbar'
@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AddClutterComponent } from './clutter/add-clutter/add-clutter.component';
+import { AuthInterceptor } from './shared/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,9 @@ import { AddClutterComponent } from './clutter/add-clutter/add-clutter.component
     MatCardModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
