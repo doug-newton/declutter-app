@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 
 export interface UserCredentials {
@@ -13,13 +14,18 @@ export interface LoginResult {
   userId: string | null
 }
 
+export interface SignupResult {
+  message: string
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   private loggedInUser: Subject<LoginResult | null> = new BehaviorSubject<LoginResult | null>(null)
@@ -38,6 +44,14 @@ export class AuthService {
 
   logout() {
     this.loggedInUser.next(null)
+  }
+
+  register(credentials: UserCredentials) {
+    this.http.post<SignupResult>('http://localhost:3000/api/user/signup', credentials).subscribe({
+      next: ((result: SignupResult) => {
+        this.router.navigate(['/auth/login'])
+      })
+    })
   }
 
 }

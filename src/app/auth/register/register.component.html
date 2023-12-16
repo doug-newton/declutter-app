@@ -1,0 +1,16 @@
+<div id="wrapper">
+    <h2>Register</h2>
+    <mat-card>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+            <mat-form-field>
+                <input matInput type="email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" formControlName="password">
+            </mat-form-field>
+            <mat-card-actions>
+                <button mat-raised-button color="primary">Regiser</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>

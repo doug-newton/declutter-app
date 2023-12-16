@@ -23,4 +23,8 @@ export class NavBarComponent {
   logIn() {
     this.router.navigate(['/auth/login'])
   }
+
+  register() {
+    this.router.navigate(['/auth/register'])
+  }
 }
