@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+    <span><a routerLink="/">Declutter</a></span>
+    <div class="spacer"></div>
+
+    <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
+        <button mat-raised-button (click)="logOut()">Log Out</button>
+    </ng-container>
+
+    <ng-template #notLoggedIn>
+        <button mat-raised-button (click)="logIn()">Log In</button>
+        <button mat-raised-button (click)="register()">Register</button>
+    </ng-template>
+
+</mat-toolbar>

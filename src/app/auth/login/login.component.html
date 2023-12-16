@@ -1,0 +1,16 @@
+<div id="wrapper">
+    <h2>Log In</h2>
+    <mat-card>
+        <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+            <mat-form-field>
+                <input matInput type="email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" formControlName="password">
+            </mat-form-field>
+            <mat-card-actions>
+                <button color="primary" mat-raised-button type="submit">Log In</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>
