@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const userRoutes = require('./routes/user.routes')
+const familyRoutes = require('./routes/family.routes')
 
 const PORT = process.env.PORT ?? 3000
 const MONGODB_CONNECTION_STRING = process.env.MONGODB_CONNECTION_STRING
@@ -13,6 +14,7 @@ app.use(express.json())
 app.use('/api', router)
 
 router.use('/user', userRoutes)
+router.use('/family', familyRoutes)
 
 mongoose.connect(MONGODB_CONNECTION_STRING).then(() => {
     console.log('connected to mongodb')
