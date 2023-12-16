@@ -37,7 +37,7 @@ exports.logIn = (req, res) => {
 
     User.findOne({ email: email }).then(user => {
         if (user == null) {
-            res.status(500).json({
+            res.status(401).json({
                 message: 'login failed'
             })
             return
