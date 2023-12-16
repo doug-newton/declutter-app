@@ -13,14 +13,16 @@ import { MatInputModule } from '@angular/material/input'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { RegisterComponent } from './auth/register/register.component'
+import { RegisterComponent } from './auth/register/register.component';
+import { AddClutterComponent } from './clutter/add-clutter/add-clutter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavBarComponent,
-    RegisterComponent
+    RegisterComponent,
+    AddClutterComponent
   ],
   imports: [
     BrowserModule,
