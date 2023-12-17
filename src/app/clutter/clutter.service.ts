@@ -28,6 +28,11 @@ export interface ClutterVoteCount {
   discard: number
 }
 
+export interface ClutterVoteResult {
+  message: string
+  votes: ClutterVoteCount
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,13 +52,13 @@ export class ClutterService {
     )
   }
 
-  vote(clutter: Clutter, vote: 'keep' | 'discard'): Observable<any> {
-    return this.http.post<any>(
+  vote(clutter: Clutter, vote: 'keep' | 'discard'): Observable<ClutterVoteCount | null> {
+    return this.http.post<ClutterVoteResult>(
       'http://localhost:3000/api/clutter/vote',
       {
         clutterId: clutter._id,
         vote: vote
       }
-    )
+    ).pipe(map(result => result.votes))
   }
 }

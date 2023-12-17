@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ClutterService } from '../../clutter.service';
+import { ClutterService, ClutterVoteCount } from '../../clutter.service';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-clutter-list-item',
@@ -12,6 +13,8 @@ export class ClutterListItemComponent {
 
   @Input() clutter
 
+  votes$: Subject<ClutterVoteCount | null> = new BehaviorSubject<ClutterVoteCount | null>(null)
+
   hasDescription() {
     if (this.clutter.description == null) return false
     if (this.clutter.description === '') return false
@@ -21,7 +24,7 @@ export class ClutterListItemComponent {
   vote(vote: 'keep' | 'discard') {
     this.clutterService.vote(this.clutter, vote).subscribe({
       next: (res) => {
-        console.log(res)
+        this.votes$.next(res)
       },
       error: (error) => {
         console.log(error)
