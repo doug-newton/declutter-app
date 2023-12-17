@@ -16,6 +16,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AddClutterComponent } from './clutter/add-clutter/add-clutter.component';
 import { AuthInterceptor } from './shared/auth-interceptor';
+import { ClutterListComponent } from './clutter/clutter-list/clutter-list.component';
+import { ClutterListItemComponent } from './clutter/clutter-list/clutter-list-item/clutter-list-item.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { AuthInterceptor } from './shared/auth-interceptor';
     LoginComponent,
     NavBarComponent,
     RegisterComponent,
-    AddClutterComponent
+    AddClutterComponent,
+    ClutterListComponent,
+    ClutterListItemComponent
   ],
   imports: [
     BrowserModule,

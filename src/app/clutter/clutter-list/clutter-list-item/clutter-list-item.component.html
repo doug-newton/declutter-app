@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-header>
+        <h2>{{clutter.name}}</h2>
+    </mat-card-header>
+    <mat-card-content *ngIf="hasDescription()">
+        {{clutter.description}}
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="button-row">
+            <button mat-raised-button color="accent">Keep</button>
+            <button mat-raised-button color="warn">Discard</button>
+        </div>
+    </mat-card-actions>
+</mat-card>
