@@ -65,3 +65,23 @@ exports.vote = (req, res) => {
         })
     })
 }
+
+exports.getVotes = (req, res) => {
+    const clutterId = req.params.clutterId
+
+    Vote.aggregate(countVotes(clutterId)).then(voteCounts => {
+        const voteCount = voteCounts[0] ?? {
+            keep: 0,
+            discard: 0
+        }
+        res.status(201).json({
+            message: 'votes retrieved successfully',
+            votes: voteCount
+        })
+    }).catch(error => {
+        res.status(500).json({
+            message: 'coudn\'t retrieve votes',
+            error: error
+        })
+    })
+}

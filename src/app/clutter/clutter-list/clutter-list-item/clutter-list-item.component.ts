@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ClutterService, ClutterVoteCount } from '../../clutter.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
@@ -7,9 +7,17 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   templateUrl: './clutter-list-item.component.html',
   styleUrl: './clutter-list-item.component.scss'
 })
-export class ClutterListItemComponent {
+export class ClutterListItemComponent implements OnInit {
 
   constructor(private clutterService: ClutterService) { }
+
+  ngOnInit(): void {
+    this.clutterService.getVotes(this.clutter).subscribe({
+      next: votes => {
+        this.votes$.next(votes)
+      }
+    })
+  }
 
   @Input() clutter
 

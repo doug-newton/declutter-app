@@ -61,4 +61,10 @@ export class ClutterService {
       }
     ).pipe(map(result => result.votes))
   }
+
+  getVotes(clutter: Clutter): Observable<ClutterVoteCount> {
+    return this.http.get<ClutterVoteResult>(
+      `http://localhost:3000/api/clutter/${clutter._id}/votes`,
+    ).pipe(map(result => result.votes))
+  }
 }
