@@ -1,16 +1,16 @@
 <div id="wrapper">
     <h2>Register</h2>
-    <mat-card>
-        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-            <mat-form-field>
-                <input matInput type="email" formControlName="email">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput type="password" formControlName="password">
-            </mat-form-field>
-            <mat-card-actions>
-                <button mat-raised-button color="primary">Regiser</button>
-            </mat-card-actions>
-        </form>
-    </mat-card>
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <mat-form-field>
+            <input matInput placeholder="email" type="email" formControlName="email">
+            <mat-error>Please enter a valid email</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="password" type="password" formControlName="password">
+            <mat-error>Please enter a password of 8 characters or longer</mat-error>
+        </mat-form-field>
+        <mat-card-actions>
+            <button [disabled]="this.registerForm.invalid" mat-raised-button color="primary">Regiser</button>
+        </mat-card-actions>
+    </form>
 </div>

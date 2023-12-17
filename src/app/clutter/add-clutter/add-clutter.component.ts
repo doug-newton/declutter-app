@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClutterService } from '../clutter.service';
 
 @Component({
@@ -14,8 +14,8 @@ export class AddClutterComponent {
   ) { }
 
   clutterForm = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl('')
+    name: new FormControl('', { validators: [Validators.required] }),
+    description: new FormControl('', { validators: [Validators.maxLength(250)] })
   })
 
   onAddClutter() {
@@ -27,6 +27,8 @@ export class AddClutterComponent {
       name: this.clutterForm.value.name!,
       description: this.clutterForm.value.description!
     })
+
+    this.clutterForm.reset()
   }
 
 }

@@ -47,6 +47,7 @@ export class AuthService {
 
   logout() {
     this.loggedInUser.next(null)
+    this.router.navigate(['/'])
   }
 
   register(credentials: UserCredentials) {

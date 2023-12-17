@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +11,8 @@ export class LoginComponent {
   constructor(private auth: AuthService) { }
 
   loginForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl('')
+    email: new FormControl('', {validators: [Validators.required, Validators.email]}),
+    password: new FormControl('', { validators: [Validators.required] })
   })
 
   logIn() {
