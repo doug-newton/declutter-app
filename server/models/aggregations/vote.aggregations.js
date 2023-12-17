@@ -27,9 +27,8 @@ exports.countVotes = function (clutterId) {
                 }
             }
         }, {
-            '$project': {
-                '_id': 0,
-                'votes': {
+            '$replaceRoot': {
+                'newRoot': {
                     '$arrayToObject': '$votes'
                 }
             }
