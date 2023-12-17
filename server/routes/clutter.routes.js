@@ -6,5 +6,6 @@ const router = express.Router()
 
 router.post('/create', auth, ClutterController.create)
 router.get('/', auth, ClutterController.getAll)
+router.post('/vote', auth, ClutterController.vote)
 
 module.exports = router
