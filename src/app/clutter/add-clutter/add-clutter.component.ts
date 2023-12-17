@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ClutterService } from '../clutter.service';
 
 @Component({
@@ -18,6 +18,8 @@ export class AddClutterComponent {
     description: new FormControl('', { validators: [Validators.maxLength(250)] })
   })
 
+  @ViewChild('formDirective') private formDirective: FormGroupDirective;
+
   onAddClutter() {
     if (!this.clutterForm.valid) {
       return
@@ -29,6 +31,7 @@ export class AddClutterComponent {
     })
 
     this.clutterForm.reset()
+    this.formDirective.resetForm()
   }
 
 }
