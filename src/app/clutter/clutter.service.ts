@@ -47,7 +47,7 @@ export class ClutterService {
     )
   }
 
-  vote(clutter: Clutter, vote: 'KEEP' | 'DISCARD'): Observable<any> {
+  vote(clutter: Clutter, vote: 'keep' | 'discard'): Observable<any> {
     return this.http.post<any>(
       'http://localhost:3000/api/clutter/vote',
       {

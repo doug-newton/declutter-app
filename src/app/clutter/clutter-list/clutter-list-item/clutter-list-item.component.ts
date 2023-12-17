@@ -18,7 +18,7 @@ export class ClutterListItemComponent {
     return true
   }
 
-  vote(vote: 'KEEP' | 'DISCARD') {
+  vote(vote: 'keep' | 'discard') {
     this.clutterService.vote(this.clutter, vote).subscribe({
       next: (res) => {
         console.log(res)
@@ -30,10 +30,10 @@ export class ClutterListItemComponent {
   }
 
   voteKeep() {
-    this.vote('KEEP')
+    this.vote('keep')
   }
 
   voteDiscard() {
-    this.vote('DISCARD')
+    this.vote('discard')
   }
 }
