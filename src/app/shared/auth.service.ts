@@ -9,7 +9,6 @@ export interface UserCredentials {
 }
 
 export interface LoginResult {
-  message: string
   token: string | null
   userId: string | null
 }
@@ -37,15 +36,17 @@ export class AuthService {
   login(credentials: UserCredentials) {
     this.http.post<LoginResult>('http://localhost:3000/api/user/login', credentials).subscribe({
       next: ((result: LoginResult) => {
+        this.saveUserCredentials(result)
         this.loggedInUser.next(result)
       }),
       error: () => {
-        this.loggedInUser.next(null)
+        this.logout()
       }
     })
   }
 
   logout() {
+    this.deleteUserCredentials()
     this.loggedInUser.next(null)
     this.router.navigate(['/'])
   }
@@ -56,6 +57,30 @@ export class AuthService {
         this.router.navigate(['/auth/login'])
       })
     })
+  }
+
+  logInFromLocalStorage() {
+    const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('userId')
+
+    if (token == null || userId == null) {
+      return
+    }
+
+    this.loggedInUser.next({
+      token: token,
+      userId: userId
+    })
+  }
+
+  saveUserCredentials(user: LoginResult) {
+    localStorage.setItem('token', user.token!)
+    localStorage.setItem('userId', user.userId!)
+  }
+
+  deleteUserCredentials() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
   }
 
 }
