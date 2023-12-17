@@ -6,7 +6,8 @@ exports.create = (req, res) => {
     const clutter = new Clutter({
         name: req.body.name,
         description: req.body.description,
-        addedBy: req.userData.userId
+        addedBy: req.userData.userId,
+        familyId: req.userData.familyId
     })
 
     clutter.save().then(result => {
@@ -22,7 +23,7 @@ exports.create = (req, res) => {
 }
 
 exports.getAll = (req, res) => {
-    Clutter.find({ addedBy: req.userData.userId }).then(result => {
+    Clutter.find({ familyId: req.userData.familyId }).then(result => {
         res.status(200).json({
             message: 'clutter retrieved successfully',
             clutter: result
