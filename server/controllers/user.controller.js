@@ -54,7 +54,8 @@ exports.logIn = (req, res) => {
             const token = jwt.sign(
                 {
                     email: email,
-                    userId: user._id
+                    userId: user._id,
+                    familyId: user.familyId
                 },
                 JWT_SECRET,
                 {
