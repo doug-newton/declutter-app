@@ -55,7 +55,7 @@ exports.logIn = (req, res) => {
                 {
                     email: email,
                     userId: user._id,
-                    familyId: user.familyId
+                    familyId: user.family
                 },
                 JWT_SECRET,
                 {
