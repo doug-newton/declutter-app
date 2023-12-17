@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
 const Clutter = require('../models/clutter')
 const Vote = require('../models/vote')
+const { countVotes } = require('../models/aggregations/vote.aggregations')
 
 exports.create = (req, res) => {
     const clutter = new Clutter({
@@ -46,41 +46,7 @@ exports.vote = (req, res) => {
     })
 
     voteEntry.save().then(result => {
-        Vote.aggregate([
-            {
-                '$match': {
-                    'clutterId': new mongoose.Types.ObjectId(clutterId)
-                }
-            }, {
-                '$group': {
-                    '_id': {
-                        'clutterId': '$clutterId',
-                        'vote': '$vote'
-                    },
-                    'total': {
-                        '$sum': 1
-                    }
-                }
-            }, {
-                '$group': {
-                    '_id': '$_id.clutterId',
-                    'votes': {
-                        '$push': {
-                            'k': '$_id.vote',
-                            'v': '$total'
-                        }
-                    }
-                }
-            }, {
-                '$project': {
-                    '_id': 0,
-                    'votes': {
-                        '$arrayToObject': '$votes'
-                    }
-                }
-            }
-        ]).then(voteCounts => {
-            console.log(voteCounts)
+        Vote.aggregate(countVotes(clutterId)).then(voteCounts => {
             const voteCount = voteCounts[0]
             res.status(201).json({
                 message: 'vote created successfully',
