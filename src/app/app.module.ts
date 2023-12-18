@@ -20,6 +20,8 @@ import { ClutterListComponent } from './clutter/clutter-list/clutter-list.compon
 import { ClutterListItemComponent } from './clutter/clutter-list/clutter-list-item/clutter-list-item.component';
 import { ClutterFormComponent } from './clutter/clutter-form/clutter-form.component';
 import { ClutterVotingCardComponent } from './clutter/clutter-voting-card/clutter-voting-card.component';
+import { CreateFamilyComponent } from './family/create-family/create-family.component';
+import { FamilyFormComponent } from './family/family-form/family-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ClutterVotingCardComponent } from './clutter/clutter-voting-card/clutte
     ClutterListComponent,
     ClutterListItemComponent,
     ClutterFormComponent,
-    ClutterVotingCardComponent
+    ClutterVotingCardComponent,
+    CreateFamilyComponent,
+    FamilyFormComponent
   ],
   imports: [
     BrowserModule,

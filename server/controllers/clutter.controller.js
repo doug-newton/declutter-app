@@ -110,7 +110,6 @@ exports.update = (req, res) => {
             message: 'clutter updated successfully'
         })
     }).catch(error => {
-        console.log(error)
         res.status(500).json({
             message: 'clutter updated failed'
         })

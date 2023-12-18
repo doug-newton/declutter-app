@@ -4,6 +4,7 @@
     <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
         <a routerLink="/clutter/add">Add</a>
         <a routerLink="/clutter/list">Vote</a>
+        <a routerLink="/family/create">Create Family</a>
         <div class="spacer"></div>
         <button mat-raised-button (click)="logOut()">Log Out</button>
     </ng-container>

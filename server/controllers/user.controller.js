@@ -79,6 +79,41 @@ exports.logIn = (req, res) => {
     })
 }
 
+exports.refreshToken = (req, res) => {
+    User.findOne({
+        _id: req.userData.userId
+    }).then(user => {
+        if (user == null) {
+            res.status(500).json({
+                message: 'token refresh failed'
+            })
+            return
+        }
+
+        const token = jwt.sign(
+            {
+                email: user.email,
+                userId: user._id,
+                familyId: user.family
+            },
+            JWT_SECRET,
+            {
+                expiresIn: '1h'
+            }
+        )
+
+        res.status(200).json({
+            message: 'token refresh successful',
+            token: token,
+            userId: user._id
+        })
+    }).catch(error => {
+        res.status(500).json({
+            message: 'token refresh failed'
+        })
+    })
+}
+
 exports.getDetails = (req, res) => {
     const userId = req.params.userId
     const familyId = req.userData.familyId

@@ -55,6 +55,19 @@ export class AuthService {
     })
   }
 
+  refreshToken() {
+    this.http.get<LoginResult>('http://localhost:3000/api/user/refresh').subscribe({
+      next: ((result: LoginResult) => {
+        this.deleteUserCredentials()
+        this.saveUserCredentials(result)
+        this.loggedInUser.next(result)
+      }),
+      error: () => {
+        this.logout()
+      }
+    })
+  }
+
   logout() {
     this.deleteUserCredentials()
     this.loggedInUser.next(null)
