@@ -103,7 +103,8 @@ export class AuthService {
   saveUserCredentials(user: LoginResult) {
     localStorage.setItem('token', user.token!)
     localStorage.setItem('userId', user.userId!)
-    localStorage.setItem('familyId', user.familyId!)
+    if (user.familyId)
+      localStorage.setItem('familyId', user.familyId)
   }
 
   deleteUserCredentials() {
