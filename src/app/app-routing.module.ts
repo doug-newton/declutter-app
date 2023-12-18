@@ -6,12 +6,13 @@ import { AddClutterComponent } from './clutter/add-clutter/add-clutter.component
 import { authGuard } from './shared/auth.guard';
 import { ClutterListComponent } from './clutter/clutter-list/clutter-list.component';
 import { CreateFamilyComponent } from './family/create-family/create-family.component';
+import { familyGuard } from './shared/family.guard';
 
 const routes: Routes = [
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/register', component: RegisterComponent },
-  { path: 'clutter/add', component: AddClutterComponent, canActivate: [authGuard] },
-  { path: 'clutter/list', component: ClutterListComponent, canActivate: [authGuard] },
+  { path: 'clutter/add', component: AddClutterComponent, canActivate: [authGuard, familyGuard] },
+  { path: 'clutter/list', component: ClutterListComponent, canActivate: [authGuard, familyGuard] },
   { path: 'family/create', component: CreateFamilyComponent, canActivate: [authGuard] },
 ];
 
