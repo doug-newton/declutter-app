@@ -8,5 +8,6 @@ router.post('/create', auth, ClutterController.create)
 router.get('/', auth, ClutterController.getAll)
 router.post('/vote', auth, ClutterController.vote)
 router.get('/:clutterId/votes', auth, ClutterController.getVotes)
+router.put('/:clutterId/update', auth, ClutterController.update)
 
 module.exports = router

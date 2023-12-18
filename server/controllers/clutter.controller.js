@@ -1,6 +1,7 @@
 const Clutter = require('../models/clutter')
 const Vote = require('../models/vote')
 const { countVotes } = require('../models/aggregations/vote.aggregations')
+const mongoose = require('mongoose')
 
 exports.create = (req, res) => {
     const clutter = new Clutter({
@@ -83,6 +84,30 @@ exports.getVotes = (req, res) => {
         res.status(500).json({
             message: 'coudn\'t retrieve votes',
             error: error
+        })
+    })
+}
+
+exports.update = (req, res) => {
+    const userId = req.userData.userId
+    const clutterId = req.params.clutterId
+    const name = req.body.name
+    const description = req.body.description
+
+    Clutter.updateOne({
+        _id: new mongoose.Types.ObjectId(clutterId),
+        addedBy: new mongoose.Types.ObjectId(userId)
+    },
+        { name: name, description: description }
+    ).then(result => {
+        console.log(result)
+        res.status(201).json({
+            message: 'clutter updated successfully'
+        })
+    }).catch(error => {
+        console.log(error)
+        res.status(500).json({
+            message: 'clutter updated failed'
         })
     })
 }
