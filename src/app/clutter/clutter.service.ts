@@ -14,6 +14,7 @@ export interface AddClutterResponse {
 
 export interface Clutter {
   _id: string
+  addedBy: string
   name: string
   description: string | null
 }
