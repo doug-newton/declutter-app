@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AddClutterData, Clutter } from '../../clutter.service';
+import { AddClutterData, Clutter, ClutterService } from '../../clutter.service';
 
 @Component({
   selector: 'app-clutter-list-item',
@@ -7,6 +7,10 @@ import { AddClutterData, Clutter } from '../../clutter.service';
   styleUrl: './clutter-list-item.component.scss'
 })
 export class ClutterListItemComponent {
+
+  constructor(
+    private clutterService: ClutterService
+  ) { }
 
   @Input() clutter!: Clutter
 
@@ -21,6 +25,12 @@ export class ClutterListItemComponent {
   }
 
   onUpdateClutter(clutter: AddClutterData) {
-    this.onChangeToVoteMode()
+    this.clutter.name = clutter.name
+    this.clutter.description = clutter.description
+    this.clutterService.update(this.clutter).subscribe({
+      next: (result) => {
+        this.onChangeToVoteMode()
+      }
+    })
   }
 }
