@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { AddClutterData, ClutterService } from '../clutter.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-clutter',
@@ -10,11 +11,14 @@ import { AddClutterData, ClutterService } from '../clutter.service';
 export class AddClutterComponent {
 
   constructor(
-    private clutterService: ClutterService
+    private clutterService: ClutterService,
+    private router: Router
   ) { }
 
   onAddClutter(clutterData: AddClutterData) {
-    this.clutterService.addClutter(clutterData)
+    this.clutterService.addClutter(clutterData).subscribe({
+      next: () => this.router.navigate(['/clutter/list'])
+    })
   }
 
 }

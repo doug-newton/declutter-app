@@ -43,8 +43,8 @@ export class ClutterService {
     private http: HttpClient
   ) { }
 
-  addClutter(data: AddClutterData) {
-    this.http.post<AddClutterResponse>('http://localhost:3000/api/clutter/create', data).subscribe()
+  addClutter(data: AddClutterData) : Observable<AddClutterResponse> {
+    return this.http.post<AddClutterResponse>('http://localhost:3000/api/clutter/create', data)
   }
 
   private clutter: Clutter[]

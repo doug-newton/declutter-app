@@ -19,7 +19,11 @@ export class CreateFamilyComponent {
 
   onCreateFamily(familyData: AddFamilyData) {
     this.familyService.createFamily(familyData).subscribe({
-      next: () => this.auth.refreshToken()
+      next: () => {
+        this.auth.refreshToken().subscribe({
+          next: () => this.router.navigate(['/clutter/add'])
+        })
+      }
     })
   }
 }

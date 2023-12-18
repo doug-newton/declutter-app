@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, tap } from 'rxjs';
 
 export interface SignupDetails {
   name: string
@@ -57,17 +57,13 @@ export class AuthService {
     })
   }
 
-  refreshToken() {
-    this.http.get<LoginResult>('http://localhost:3000/api/user/refresh').subscribe({
-      next: ((result: LoginResult) => {
+  refreshToken(): Observable<any> {
+    return this.http.get<LoginResult>('http://localhost:3000/api/user/refresh').pipe(
+      tap((result: LoginResult) => {
         this.deleteUserCredentials()
         this.saveUserCredentials(result)
         this.loggedInUser.next(result)
-      }),
-      error: () => {
-        this.logout()
-      }
-    })
+      }))
   }
 
   logout() {
