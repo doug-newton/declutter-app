@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AddClutterData } from '../clutter.service';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 
@@ -7,14 +7,21 @@ import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular
   templateUrl: './clutter-form.component.html',
   styleUrl: './clutter-form.component.scss'
 })
-export class ClutterFormComponent {
+export class ClutterFormComponent implements AfterContentInit {
 
   constructor() { }
 
   @Output() clutterData = new EventEmitter<AddClutterData>()
   @Input() title: string
   @Input() actionText: string
+  @Input() clutterToEdit: AddClutterData
   @ViewChild('formDirective') private formDirective: FormGroupDirective;
+
+  ngAfterContentInit(): void {
+    if (this.clutterToEdit) {
+      this.clutterForm.patchValue(this.clutterToEdit)
+    }
+  }
 
   clutterForm = new FormGroup({
     name: new FormControl('', { validators: [Validators.required] }),
