@@ -19,6 +19,7 @@ import { AuthInterceptor } from './shared/auth-interceptor';
 import { ClutterListComponent } from './clutter/clutter-list/clutter-list.component';
 import { ClutterListItemComponent } from './clutter/clutter-list/clutter-list-item/clutter-list-item.component';
 import { ClutterFormComponent } from './clutter/clutter-form/clutter-form.component';
+import { ClutterVotingCardComponent } from './clutter/clutter-voting-card/clutter-voting-card.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ClutterFormComponent } from './clutter/clutter-form/clutter-form.compon
     AddClutterComponent,
     ClutterListComponent,
     ClutterListItemComponent,
-    ClutterFormComponent
+    ClutterFormComponent,
+    ClutterVotingCardComponent
   ],
   imports: [
     BrowserModule,
