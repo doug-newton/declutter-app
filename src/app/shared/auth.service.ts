@@ -3,6 +3,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 
+export interface SignupDetails {
+  name: string
+  email: string
+  password: string
+}
+
 export interface UserCredentials {
   email: string
   password: string
@@ -55,7 +61,7 @@ export class AuthService {
     this.router.navigate(['/'])
   }
 
-  register(credentials: UserCredentials) {
+  register(credentials: SignupDetails) {
     this.http.post<SignupResult>('http://localhost:3000/api/user/signup', credentials).subscribe({
       next: ((result: SignupResult) => {
         this.router.navigate(['/auth/login'])

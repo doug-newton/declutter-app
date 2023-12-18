@@ -14,6 +14,7 @@ export class RegisterComponent {
   ) { }
 
   registerForm = new FormGroup({
+    name: new FormControl('', { validators: [Validators.required] }),
     email: new FormControl('', { validators: [Validators.required, Validators.email] }),
     password: new FormControl('', { validators: [Validators.required, Validators.min(8)] })
   })
@@ -24,6 +25,7 @@ export class RegisterComponent {
     }
     
     this.auth.register({
+      name: this.registerForm.value.name!,
       email: this.registerForm.value.email!,
       password: this.registerForm.value.password!
     })

@@ -6,11 +6,13 @@ const mongoose = require('mongoose')
 const JWT_SECRET = process.env.JWT_SECRET
 
 exports.signUp = (req, res) => {
+    const name = req.body.name
     const email = req.body.email
     const password = req.body.password
 
     bcrypt.hash(password, 10).then(hash => {
         const user = new User({
+            name: name,
             email: email,
             password: hash
         })
