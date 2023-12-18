@@ -1,6 +1,7 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>{{clutter.name}}</mat-card-title>
+        <mat-card-title>{{clutter.name}} <button mat-raised-button color="primary"
+                *ngIf="isThisUser$|async">edit</button></mat-card-title>
         <mat-card-subtitle *ngIf="(addedBy$ | async) as addedBy">added by {{addedBy}}</mat-card-subtitle>
         <mat-card-subtitle *ngIf="(votes$ | async) as votes">
             Keep: {{votes.keep ?? 0}}, Discard: {{votes.discard ?? 0}}

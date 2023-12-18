@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Clutter, ClutterService, ClutterVoteCount } from '../../clutter.service';
 import { BehaviorSubject, Observable, Subject, map, of, switchMap } from 'rxjs';
 import { UsersService } from '../../../shared/users.service';
+import { AuthService } from '../../../shared/auth.service';
 
 @Component({
   selector: 'app-clutter-list-item',
@@ -12,7 +13,8 @@ export class ClutterListItemComponent implements OnInit {
 
   constructor(
     private clutterService: ClutterService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private auth: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +31,9 @@ export class ClutterListItemComponent implements OnInit {
   addedBy$: Observable<string> = of(this.clutter).pipe(
     switchMap(clutter => this.usersService.getUserDetails(this.clutter.addedBy).pipe(
       map(details => details.name))))
+  isThisUser$: Observable<boolean> = of(this.clutter).pipe(
+    switchMap(clutter => this.auth.isThisUser(this.clutter.addedBy))
+  )
 
   hasDescription() {
     if (this.clutter.description == null) return false

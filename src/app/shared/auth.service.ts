@@ -32,6 +32,10 @@ export class AuthService {
   public token$: Observable<string | null> = this.loggedInUser.pipe(
     map(user => user == null ? null : user.token)
   )
+  
+  isThisUser(userId: string): Observable<boolean> {
+    return this.loggedInUser.pipe(map(userDetails => userDetails.userId == userId))
+  }
 
   login(credentials: UserCredentials) {
     this.http.post<LoginResult>('http://localhost:3000/api/user/login', credentials).subscribe({
