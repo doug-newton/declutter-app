@@ -4,6 +4,13 @@ const User = require('../models/user')
 exports.create = (req, res) => {
     const name = req.body.name
 
+    if (req.userData.familyId) {
+        res.status(500).json({
+            message: 'can\'t create family - you already have one!'
+        })
+        return
+    }
+
     const family = new Family({
         name: name,
         owner: req.userData.userId
