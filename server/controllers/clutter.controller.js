@@ -100,7 +100,12 @@ exports.update = (req, res) => {
     },
         { name: name, description: description }
     ).then(result => {
-        console.log(result)
+        if (result.matchedCount != 1) {
+            res.status(401).json({
+                message: 'Unauthorised'
+            })
+            return
+        }
         res.status(201).json({
             message: 'clutter updated successfully'
         })
