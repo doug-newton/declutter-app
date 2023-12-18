@@ -7,6 +7,7 @@ import { authGuard } from './shared/auth.guard';
 import { ClutterListComponent } from './clutter/clutter-list/clutter-list.component';
 import { CreateFamilyComponent } from './family/create-family/create-family.component';
 import { familyGuard } from './shared/family.guard';
+import { ManageFamilyComponent } from './family/manage-family/manage-family.component';
 
 const routes: Routes = [
   { path: 'auth/login', component: LoginComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'clutter/add', component: AddClutterComponent, canActivate: [authGuard, familyGuard] },
   { path: 'clutter/list', component: ClutterListComponent, canActivate: [authGuard, familyGuard] },
   { path: 'family/create', component: CreateFamilyComponent, canActivate: [authGuard] },
+  { path: 'family/manage', component: ManageFamilyComponent, canActivate: [authGuard] },
 ];
 
 @NgModule({

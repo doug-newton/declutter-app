@@ -22,6 +22,7 @@ import { ClutterFormComponent } from './clutter/clutter-form/clutter-form.compon
 import { ClutterVotingCardComponent } from './clutter/clutter-voting-card/clutter-voting-card.component';
 import { CreateFamilyComponent } from './family/create-family/create-family.component';
 import { FamilyFormComponent } from './family/family-form/family-form.component';
+import { ManageFamilyComponent } from './family/manage-family/manage-family.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { FamilyFormComponent } from './family/family-form/family-form.component'
     ClutterFormComponent,
     ClutterVotingCardComponent,
     CreateFamilyComponent,
-    FamilyFormComponent
+    FamilyFormComponent,
+    ManageFamilyComponent
   ],
   imports: [
     BrowserModule,
