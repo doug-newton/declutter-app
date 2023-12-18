@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Clutter, ClutterService } from '../../clutter.service';
-import { UsersService } from '../../../shared/users.service';
-import { AuthService } from '../../../shared/auth.service';
+import { AddClutterData, Clutter } from '../../clutter.service';
 
 @Component({
   selector: 'app-clutter-list-item',
@@ -10,11 +8,19 @@ import { AuthService } from '../../../shared/auth.service';
 })
 export class ClutterListItemComponent {
 
-  constructor(
-    private clutterService: ClutterService,
-    private usersService: UsersService,
-    private auth: AuthService
-  ) { }
-
   @Input() clutter!: Clutter
+
+  mode: 'VOTE' | 'EDIT' = 'VOTE'
+
+  onChangeToEditMode() {
+    this.mode = 'EDIT'
+  }
+
+  onChangeToVoteMode() {
+    this.mode = 'VOTE'
+  }
+
+  onUpdateClutter(clutter: AddClutterData) {
+    this.onChangeToVoteMode()
+  }
 }

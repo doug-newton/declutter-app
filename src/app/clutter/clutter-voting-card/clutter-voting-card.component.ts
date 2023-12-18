@@ -36,6 +36,10 @@ export class ClutterVotingCardComponent {
     switchMap(clutter => this.auth.isThisUser(this.clutter.addedBy))
   )
 
+  onEdit() {
+    this.changeToEditMode.emit()
+  }
+
   hasDescription() {
     if (this.clutter.description == null) return false
     if (this.clutter.description === '') return false
