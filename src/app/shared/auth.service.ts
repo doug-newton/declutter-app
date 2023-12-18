@@ -17,6 +17,7 @@ export interface UserCredentials {
 export interface LoginResult {
   token: string | null
   userId: string | null
+  familyId?: string
 }
 
 export interface SignupResult {
@@ -38,6 +39,7 @@ export class AuthService {
   public token$: Observable<string | null> = this.loggedInUser.pipe(
     map(user => user == null ? null : user.token)
   )
+  public familyId$: Observable<string | null> = this.loggedInUser.pipe(map(user => user ? user.familyId : null))
   
   isThisUser(userId: string): Observable<boolean> {
     return this.loggedInUser.pipe(map(userDetails => userDetails.userId == userId))
