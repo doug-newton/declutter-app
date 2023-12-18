@@ -69,7 +69,8 @@ exports.logIn = (req, res) => {
             res.status(200).json({
                 message: 'login successful',
                 token: token,
-                userId: user._id
+                userId: user._id,
+                familyId: user.family
             })
         })
     }).catch(error => {
@@ -105,7 +106,8 @@ exports.refreshToken = (req, res) => {
         res.status(200).json({
             message: 'token refresh successful',
             token: token,
-            userId: user._id
+            userId: user._id,
+            familyId: user.family
         })
     }).catch(error => {
         res.status(500).json({
