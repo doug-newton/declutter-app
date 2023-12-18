@@ -87,6 +87,7 @@ export class AuthService {
   logInFromLocalStorage() {
     const token = localStorage.getItem('token')
     const userId = localStorage.getItem('userId')
+    const familyId = localStorage.getItem('familyId')
 
     if (token == null || userId == null) {
       return
@@ -94,18 +95,21 @@ export class AuthService {
 
     this.loggedInUser.next({
       token: token,
-      userId: userId
+      userId: userId,
+      familyId: familyId
     })
   }
 
   saveUserCredentials(user: LoginResult) {
     localStorage.setItem('token', user.token!)
     localStorage.setItem('userId', user.userId!)
+    localStorage.setItem('familyId', user.familyId!)
   }
 
   deleteUserCredentials() {
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
+    localStorage.removeItem('familyId')
   }
 
 }
