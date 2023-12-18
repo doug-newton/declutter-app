@@ -77,29 +77,29 @@ exports.logIn = (req, res) => {
     })
 }
 
-exports.get = (req, res) => {
+exports.getDetails = (req, res) => {
     const userId = req.params.userId
-    const familyId = req.userId.family
-    
-    User.findOne({ 
-        _id: mongoose.Types.ObjectId(userId), 
-        family: mongoose.Types.ObjectId(familyId) }).then(user => {
-            if (!user) {
-                res.status(404).json({
-                    message: 'user not found'
-                })
-                return
-            }
+    const familyId = req.userData.familyId
 
-            res.status(200).json({
-                message: 'user found successfully',
-                userId: user._id,
-                familyId: user.family,
-                name: user.name
+    User.findOne({
+        _id: new mongoose.Types.ObjectId(userId),
+        family: new mongoose.Types.ObjectId(familyId)
+    }).then(user => {
+        if (!user) {
+            res.status(404).json({
+                message: 'user not found'
             })
-        }).catch(error => {
-            res.status(500).json({
-                message: 'couldn\'t find user'
-            })
+            return
+        }
+        res.status(200).json({
+            message: 'user found successfully',
+            userId: user._id,
+            familyId: user.family,
+            name: user.name
         })
+    }).catch(error => {
+        res.status(500).json({
+            message: 'couldn\'t find user'
+        })
+    })
 }
