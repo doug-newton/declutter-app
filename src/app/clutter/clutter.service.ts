@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 
 export interface AddClutterData {
   name: string
@@ -47,10 +47,19 @@ export class ClutterService {
     this.http.post<AddClutterResponse>('http://localhost:3000/api/clutter/create', data).subscribe()
   }
 
-  getClutter(): Observable<Clutter[]> {
-    return this.http.get<GetClutterResponse>('http://localhost:3000/api/clutter').pipe(
+  private clutter: Clutter[]
+  private clutterSubject$: Subject<Clutter[]> = new BehaviorSubject<Clutter[]>([])
+  clutter$: Observable<Clutter[]> = this.clutterSubject$
+
+  getClutter() {
+    this.http.get<GetClutterResponse>('http://localhost:3000/api/clutter').pipe(
       map(response => response.clutter)
-    )
+    ).subscribe({
+      next: clutter => {
+        this.clutter = clutter
+        this.clutterSubject$.next(clutter)
+      }
+    })
   }
 
   vote(clutter: Clutter, vote: 'keep' | 'discard'): Observable<ClutterVoteCount | null> {
@@ -74,5 +83,17 @@ export class ClutterService {
       `http://localhost:3000/api/clutter/${clutter._id}/update`,
       clutter
    )
+  }
+
+  delete(clutter: Clutter) {
+    this.http.delete<any>(
+      `http://localhost:3000/api/clutter/${clutter._id}/delete`,
+    ).subscribe({
+      next: result => {
+        const newClutter = this.clutter.filter(c => c._id != clutter._id)
+        this.clutter = newClutter
+        this.clutterSubject$.next(this.clutter)
+      }
+    })
   }
 }

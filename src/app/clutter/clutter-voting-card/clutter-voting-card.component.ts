@@ -40,6 +40,10 @@ export class ClutterVotingCardComponent {
     this.changeToEditMode.emit()
   }
 
+  onDelete() {
+    this.clutterService.delete(this.clutter)
+  }
+
   hasDescription() {
     if (this.clutter.description == null) return false
     if (this.clutter.description === '') return false

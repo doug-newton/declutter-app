@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ClutterService, Clutter } from '../clutter.service';
 import { Observable } from 'rxjs';
 
@@ -7,8 +7,12 @@ import { Observable } from 'rxjs';
   templateUrl: './clutter-list.component.html',
   styleUrl: './clutter-list.component.scss'
 })
-export class ClutterListComponent {
+export class ClutterListComponent implements OnInit {
   constructor(private clutterService: ClutterService) { }
 
-  clutter$: Observable<Clutter[]> = this.clutterService.getClutter()
+  ngOnInit(): void {
+    this.clutterService.getClutter()
+  }
+
+  clutter$: Observable<Clutter[]> = this.clutterService.clutter$
 }

@@ -116,3 +116,29 @@ exports.update = (req, res) => {
         })
     })
 }
+
+exports.delete = (req, res) => {
+    const userId = req.userData.userId
+    const clutterId = req.params.clutterId
+
+    Clutter.deleteOne({
+        _id: new mongoose.Types.ObjectId(clutterId),
+        addedBy: new mongoose.Types.ObjectId(userId)
+    }).then(result => {
+        if (result.deletedCount != 1) {
+            res.status(401).json({
+                message: 'Unauthorised'
+            })
+            return
+        }
+        res.status(201).json({
+            message: 'clutter deleted successfully',
+            result: result
+        })
+    }).catch(error => {
+        console.log(error)
+        res.status(500).json({
+            message: 'clutter deletion failed'
+        })
+    })
+}
