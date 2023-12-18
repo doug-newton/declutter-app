@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
 import { Router } from '@angular/router';
+import { FamilyService } from '../family/family.service';
 
 
 @Component({
@@ -11,10 +12,12 @@ import { Router } from '@angular/router';
 export class NavBarComponent {
   constructor(
     private auth: AuthService,
+    private familyService: FamilyService,
     private router: Router
   ) {}
 
   isLoggedIn$ = this.auth.isLoggedIn$
+  hasFamily$ = this.familyService.hasFamily$
 
   logOut() {
     this.auth.logout()
