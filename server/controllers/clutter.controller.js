@@ -36,7 +36,7 @@ exports.getAll = (req, res) => {
 }
 
 exports.vote = (req, res) => {
-    const clutterId = req.body.clutterId
+    const clutterId = req.params.clutterId
     const vote = req.body.vote
     const userId = req.userData.userId
     const familyId = req.userData.familyId

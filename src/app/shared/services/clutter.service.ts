@@ -13,7 +13,7 @@ export class ClutterService {
   ) { }
 
   addClutter(data: AddClutterData) : Observable<AddClutterResponse> {
-    return this.http.post<AddClutterResponse>('http://localhost:3000/api/clutter/create', data)
+    return this.http.post<AddClutterResponse>('http://localhost:3000/api/clutter/', data)
   }
 
   private clutter: Clutter[]
@@ -33,9 +33,8 @@ export class ClutterService {
 
   vote(clutter: Clutter, vote: 'keep' | 'discard'): Observable<ClutterVoteCount | null> {
     return this.http.post<ClutterVoteResult>(
-      'http://localhost:3000/api/clutter/vote',
+      `http://localhost:3000/api/clutter/${clutter._id}/vote`,
       {
-        clutterId: clutter._id,
         vote: vote
       }
     ).pipe(map(result => result.votes))
@@ -43,14 +42,14 @@ export class ClutterService {
 
   update(clutter: Clutter): Observable<any> {
     return this.http.put<any>(
-      `http://localhost:3000/api/clutter/${clutter._id}/update`,
+      `http://localhost:3000/api/clutter/${clutter._id}`,
       clutter
    )
   }
 
   delete(clutter: Clutter) {
     this.http.delete<any>(
-      `http://localhost:3000/api/clutter/${clutter._id}/delete`,
+      `http://localhost:3000/api/clutter/${clutter._id}`,
     ).subscribe({
       next: result => {
         const newClutter = this.clutter.filter(c => c._id != clutter._id)
