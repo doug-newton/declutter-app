@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../shared/auth.service';
+import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
-import { FamilyService } from '../family/family.service';
+import { FamilyService } from '../shared/services/family.service';
 
 
 @Component({

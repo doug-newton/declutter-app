@@ -1,0 +1,14 @@
+<h2>{{title}}</h2>
+<form [formGroup]="clutterForm" (ngSubmit)="onAddClutter()" #formDirective="ngForm">
+    <mat-form-field>
+        <input matInput placeholder="name" type="text" formControlName="name">
+        <mat-error>Please provide a name for your item of clutter!</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <textarea matInput placeholder="description (optional)" formControlName="description"></textarea>
+        <mat-error>Max length of 250 characters exceeded</mat-error>
+    </mat-form-field>
+    <mat-card-actions>
+        <button mat-raised-button [disabled]="!this.clutterForm.valid" type="submit">{{actionText}}</button>
+    </mat-card-actions>
+</form>

@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { AddClutterComponent } from './clutter/add-clutter/add-clutter.component';
-import { authGuard } from './shared/auth.guard';
-import { ClutterListComponent } from './clutter/clutter-list/clutter-list.component';
-import { CreateFamilyComponent } from './family/create-family/create-family.component';
-import { familyGuard } from './shared/family.guard';
-import { ManageFamilyComponent } from './family/manage-family/manage-family.component';
+
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { AddClutterComponent } from './pages/add-clutter/add-clutter.component';
+import { ClutterListComponent } from './pages/clutter-list/clutter-list.component';
+import { CreateFamilyComponent } from './pages/create-family/create-family.component';
+import { ManageFamilyComponent } from './pages/manage-family/manage-family.component';
+
+import { authGuard } from './shared/guards/auth.guard';
+import { familyGuard } from './shared/guards/family.guard';
 
 const routes: Routes = [
   { path: 'auth/login', component: LoginComponent },
