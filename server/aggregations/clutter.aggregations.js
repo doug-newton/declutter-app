@@ -4,32 +4,33 @@ exports.countVotes = function (clutterId) {
     return [
         {
             '$match': {
-                'clutterId': new mongoose.Types.ObjectId(clutterId)
+                '_id': new mongoose.Types.ObjectId(clutterId)
+            }
+        }, {
+            '$unwind': {
+                'path': '$votes'
             }
         }, {
             '$group': {
-                '_id': {
-                    'clutterId': '$clutterId',
-                    'vote': '$vote'
-                },
-                'total': {
+                '_id': '$votes.vote',
+                'count': {
                     '$sum': 1
                 }
             }
         }, {
             '$group': {
-                '_id': '$_id.clutterId',
-                'votes': {
+                '_id': null,
+                'voteCounts': {
                     '$push': {
-                        'k': '$_id.vote',
-                        'v': '$total'
+                        'k': '$_id',
+                        'v': '$count'
                     }
                 }
             }
         }, {
             '$replaceRoot': {
                 'newRoot': {
-                    '$arrayToObject': '$votes'
+                    '$arrayToObject': '$voteCounts'
                 }
             }
         }

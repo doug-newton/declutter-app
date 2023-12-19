@@ -13,8 +13,8 @@
             >delete</button>
             </mat-card-title>
         <mat-card-subtitle *ngIf="(addedBy$ | async) as addedBy">added by {{addedBy}}</mat-card-subtitle>
-        <mat-card-subtitle *ngIf="(votes$ | async) as votes">
-            Keep: {{votes.keep ?? 0}}, Discard: {{votes.discard ?? 0}}
+        <mat-card-subtitle>
+            Keep: {{ clutter.voteCounts.keep }}, Discard: {{ clutter.voteCounts.discard }}
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content *ngIf="hasDescription()">

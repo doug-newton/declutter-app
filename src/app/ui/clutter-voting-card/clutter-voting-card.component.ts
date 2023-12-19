@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UsersService } from '../../shared/services/users.service';
 import { AuthService } from '../../shared/services/auth.service';
-import { BehaviorSubject, Observable, Subject, map, of, switchMap } from 'rxjs';
+import { Observable, map, of, switchMap } from 'rxjs';
 import { ClutterService } from '../../shared/services/clutter.service';
-import { Clutter, ClutterVoteCount } from '../../shared/models';
+import { Clutter } from '../../shared/models';
 
 @Component({
   selector: 'app-clutter-voting-card',
@@ -18,18 +18,9 @@ export class ClutterVotingCardComponent {
     private auth: AuthService
   ) { }
 
-  ngOnInit(): void {
-    this.clutterService.getVotes(this.clutter).subscribe({
-      next: votes => {
-        this.votes$.next(votes)
-      }
-    })
-  }
-
   @Input() clutter!: Clutter
   @Output() changeToEditMode = new EventEmitter()
 
-  votes$: Subject<ClutterVoteCount | null> = new BehaviorSubject<ClutterVoteCount | null>(null)
   addedBy$: Observable<string> = of(this.clutter).pipe(
     switchMap(clutter => this.usersService.getUserDetails(this.clutter.addedBy).pipe(
       map(details => details.name))))
@@ -54,7 +45,8 @@ export class ClutterVotingCardComponent {
   vote(vote: 'keep' | 'discard') {
     this.clutterService.vote(this.clutter, vote).subscribe({
       next: (res) => {
-        this.votes$.next(res)
+        this.clutter.voteCounts.keep = res.keep ?? 0
+        this.clutter.voteCounts.discard = res.discard ?? 0
       },
       error: (error) => {
         console.log(error)

@@ -40,21 +40,22 @@ export interface AddClutterResponse {
   clutterId: string
 }
 
+export interface ClutterVoteCount {
+  keep: number
+  discard: number
+}
+
 export interface Clutter extends AddClutterData {
   _id: string
   addedBy: string
   name: string
   description: string | null
+  voteCounts: ClutterVoteCount
 }
 
 export interface GetClutterResponse {
   message: string,
   clutter: Clutter[]
-}
-
-export interface ClutterVoteCount {
-  keep: number
-  discard: number
 }
 
 export interface ClutterVoteResult {

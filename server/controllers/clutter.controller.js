@@ -1,6 +1,5 @@
 const Clutter = require('../models/clutter')
-const Vote = require('../models/vote')
-const { countVotes } = require('../models/aggregations/vote.aggregations')
+const Aggregations = require('../aggregations/clutter.aggregations')
 const mongoose = require('mongoose')
 
 exports.create = (req, res) => {
@@ -40,50 +39,50 @@ exports.vote = (req, res) => {
     const clutterId = req.body.clutterId
     const vote = req.body.vote
     const userId = req.userData.userId
+    const familyId = req.userData.familyId
 
-    const voteEntry = new Vote({
-        clutterId: clutterId,
-        userId: userId,
-        vote: vote
-    })
-
-    voteEntry.save().then(result => {
-        Vote.aggregate(countVotes(clutterId)).then(voteCounts => {
-            const voteCount = voteCounts[0]
-            res.status(201).json({
-                message: 'vote created successfully',
-                votes: voteCount
+    Clutter.updateOne(
+        { _id: new mongoose.Types.ObjectId(clutterId), familyId: new mongoose.Types.ObjectId(familyId) },
+        {
+            $push: { votes: {
+                userId: new mongoose.Types.ObjectId(userId),
+                vote: vote
+            }}
+        }
+    ).then(result => {
+        if (result.matchedCount != 1) {
+            res.status(401).json({
+                message: 'authorisation failed'
             })
+            return
+        }
+
+        Clutter.aggregate(Aggregations.countVotes(clutterId)).then(voteCounts => {
+            voteCounts = voteCounts[0]
+
+            Clutter.updateOne(
+                { _id: new mongoose.Types.ObjectId(clutterId), familyId: new mongoose.Types.ObjectId(familyId) },
+                {
+                    voteCounts: {
+                        keep: voteCounts.keep ?? 0,
+                        discard: voteCounts.discard ?? 0
+                    }
+                }
+            ).then(result => {
+                res.status(201).json({
+                    message: 'vote successful',
+                    votes: voteCounts
+                })
+            })
+
         }).catch(error => {
             res.status(500).json({
-                message: 'vote aggregation failed',
-                error: error
+                message: 'vote aggregation failed'
             })
         })
     }).catch(error => {
         res.status(500).json({
-            message: 'voting failed',
-            error: error
-        })
-    })
-}
-
-exports.getVotes = (req, res) => {
-    const clutterId = req.params.clutterId
-
-    Vote.aggregate(countVotes(clutterId)).then(voteCounts => {
-        const voteCount = voteCounts[0] ?? {
-            keep: 0,
-            discard: 0
-        }
-        res.status(201).json({
-            message: 'votes retrieved successfully',
-            votes: voteCount
-        })
-    }).catch(error => {
-        res.status(500).json({
-            message: 'coudn\'t retrieve votes',
-            error: error
+            message: 'voting failed'
         })
     })
 }
