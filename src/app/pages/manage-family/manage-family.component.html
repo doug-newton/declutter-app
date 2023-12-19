@@ -1,8 +1,8 @@
 <ng-container *ngIf="(hasFamily$ | async) == true; else noFamily">
     <ng-container *ngIf="(family$ | async) as family">
         <h2>{{family.name}}</h2>
-        <ul *ngIf="(familyMembers$ | async) as members">
-            <li *ngFor="let member of members">{{member.name}}</li>
+        <ul>
+            <li *ngFor="let member of family.members">{{member.name}}</li>
         </ul>
     </ng-container>
 </ng-container>

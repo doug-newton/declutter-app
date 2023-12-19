@@ -12,5 +12,4 @@ export class ManageFamilyComponent {
   constructor(private familyService: FamilyService) { }
   hasFamily$: Observable<boolean> = this.familyService.hasFamily$
   family$: Observable<Family> = this.familyService.family$
-  familyMembers$: Observable<FamilyMember[]> = this.familyService.familyMembers$
 }

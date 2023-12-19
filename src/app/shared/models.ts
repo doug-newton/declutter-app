@@ -3,8 +3,15 @@ export interface AddFamilyData {
     name: string
 }
 
+export interface FamilyMember {
+  _id: string
+  name: string
+  email: string
+}
+
 export interface Family extends AddFamilyData {
     _id: string
+    members: FamilyMember[]
 }
 
 export interface AddFamilyResult {
@@ -15,12 +22,6 @@ export interface AddFamilyResult {
 export interface GetFamilyResult {
   message: string
   family: Family
-}
-
-export interface FamilyMember {
-  _id: string
-  name: string
-  familyId: string
 }
 
 export interface FamilyMembersResult {
