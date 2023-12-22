@@ -1,4 +1,8 @@
-<app-clutter-voting-card *ngIf="mode === 'VOTE'" [clutter]="clutter" (changeToEditMode)="onChangeToEditMode()"></app-clutter-voting-card>
+<app-clutter-voting-card 
+    *ngIf="mode === 'VOTE'" 
+    [clutter]="clutter" 
+    (changeToEditMode)="onChangeToEditMode()"
+    ></app-clutter-voting-card>
 
 <app-clutter-form
     *ngIf="mode === 'EDIT'"
@@ -6,4 +10,4 @@
     [actionText]="'Save'"
     [clutterToEdit]="clutter"
     (clutterData)="onUpdateClutter($event)"
-> </app-clutter-form>
+    ></app-clutter-form>
