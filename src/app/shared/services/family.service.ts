@@ -57,7 +57,6 @@ export class FamilyService {
   addMember(email: string) {
     this.http.post<{ family: Family }>(`http://localhost:3000/api/family/${this.family._id}/members`, { email: email }).subscribe({
       next: response => {
-        console.log(response)
         this.family = response.family
         this.familySubject$.next(this.family)
       }
