@@ -1,0 +1,6 @@
+<app-family-form *ngIf="family$ | async as family"
+    [title]="'Edit Family'"
+    [familyToEdit]="family"
+    [actionText]="'Save'"
+    (familyData)="onUpdateFamily($event)"
+></app-family-form>

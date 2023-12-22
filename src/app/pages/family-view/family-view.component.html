@@ -1,0 +1,45 @@
+<ng-container *ngIf="vm$ | async as vm; else noFamily">
+
+    <h2>{{vm.family.name}}
+        <a *ngIf="userIsOwner(vm.family, vm.userId)" mat-raised-button color="primary"
+            routerLink="/family/edit">edit</a>
+    </h2>
+
+    <table mat-table [dataSource]="vm.family.members" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let member">
+                {{member.name}}
+                <mat-chip *ngIf="memberIsOwner(vm.family, member)">owner</mat-chip>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email Address</th>
+            <td mat-cell *matCellDef="let member">{{member.email}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let member">
+                <button *ngIf="!memberIsOwner(vm.family, member) && userIsOwner(vm.family, vm.userId)" mat-raised-button
+                    color="warn" (click)="removeMember(member)">remove</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="cols"></tr>
+        <tr mat-row *matRowDef="let row; columns: cols"></tr>
+
+    </table>
+
+
+    <mat-card *ngIf="userIsOwner(vm.family, vm.userId)">
+        <app-family-form-add-member (onAdded)="addMember($event)" [family]="vm.family"></app-family-form-add-member>
+    </mat-card>
+
+</ng-container>
+
+<ng-template #noFamily>
+    <app-no-family-message></app-no-family-message>
+</ng-template>

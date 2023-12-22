@@ -21,16 +21,17 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AddClutterComponent } from './pages/add-clutter/add-clutter.component';
 import { ClutterListComponent } from './pages/clutter-list/clutter-list.component';
 import { CreateFamilyComponent } from './pages/create-family/create-family.component';
-import { ManageFamilyComponent } from './pages/manage-family/manage-family.component';
 
 import { ClutterListItemComponent } from './ui/clutter-list-item/clutter-list-item.component';
 import { ClutterFormComponent } from './ui/clutter-form/clutter-form.component';
 import { ClutterVotingCardComponent } from './ui/clutter-voting-card/clutter-voting-card.component';
 import { FamilyFormComponent } from './ui/family-form/family-form.component';
-import { FamilyViewComponent } from './ui/family-view/family-view.component';
+import { FamilyViewComponent } from './pages/family-view/family-view.component';
 
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { FamilyFormAddMemberComponent } from './ui/family-form-add-member/family-form-add-member.component';
+import { FamilyEditComponent } from './pages/family-edit/family-edit.component';
+import { NoFamilyMessageComponent } from './ui/no-family-message/no-family-message.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +46,10 @@ import { FamilyFormAddMemberComponent } from './ui/family-form-add-member/family
     ClutterVotingCardComponent,
     CreateFamilyComponent,
     FamilyFormComponent,
-    ManageFamilyComponent,
     FamilyViewComponent,
-    FamilyFormAddMemberComponent
+    FamilyFormAddMemberComponent,
+    FamilyEditComponent,
+    NoFamilyMessageComponent
   ],
   imports: [
     BrowserModule,

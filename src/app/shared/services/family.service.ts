@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AddFamilyData, AddFamilyResult, Family, FamilyMember, FamilyMembersResult, GetFamilyResult } from '../models';
 import { BehaviorSubject, Observable, Subject, filter, map, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { HttpClient } from '@angular/common/http';
 export class FamilyService {
   constructor(
     private auth: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   loadFamily(): void {
@@ -41,6 +43,7 @@ export class FamilyService {
       next: result => {
         this.family.name = family.name
         this.familySubject$.next(this.family)
+        this.router.navigate(['/family/view'])
       }
     })
   }
