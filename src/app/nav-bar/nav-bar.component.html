@@ -13,8 +13,8 @@
 
     <ng-template #notLoggedIn>
         <div class="spacer"></div>
-        <button mat-raised-button (click)="logIn()">Log In</button>
-        <button mat-raised-button (click)="register()">Register</button>
+        <a mat-raised-button routerLink="/auth/login">Log In</a>
+        <a mat-raised-button routerLink="/auth/register">Register</a>
     </ng-template>
 
 </mat-toolbar>

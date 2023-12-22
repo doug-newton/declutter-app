@@ -12,8 +12,7 @@ import { FamilyService } from '../shared/services/family.service';
 export class NavBarComponent {
   constructor(
     private auth: AuthService,
-    private familyService: FamilyService,
-    private router: Router
+    private familyService: FamilyService
   ) {}
 
   isLoggedIn$ = this.auth.isLoggedIn$
@@ -21,13 +20,5 @@ export class NavBarComponent {
 
   logOut() {
     this.auth.logout()
-  }
-
-  logIn() {
-    this.router.navigate(['/auth/login'])
-  }
-
-  register() {
-    this.router.navigate(['/auth/register'])
   }
 }
