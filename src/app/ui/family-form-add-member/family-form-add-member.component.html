@@ -1,0 +1,12 @@
+<mat-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm">
+        <mat-form-field>
+            <mat-label for="newMemberEmail">Add Member</mat-label>
+            <input id="newMemberEmail" type="email" matInput formControlName="email">
+            <mat-error>Please enter a valid email</mat-error>
+        </mat-form-field>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit">add</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

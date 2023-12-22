@@ -6,7 +6,8 @@ import { ClutterService } from '../../shared/services/clutter.service';
 @Component({
   selector: 'app-clutter-list',
   templateUrl: './clutter-list.component.html',
-  styleUrl: './clutter-list.component.scss'
+  styleUrl: './clutter-list.component.scss',
+  providers: [ClutterService]
 })
 export class ClutterListComponent implements OnInit {
   constructor(private clutterService: ClutterService) { }

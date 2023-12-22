@@ -26,10 +26,10 @@ export class ClutterListItemComponent {
   }
 
   onUpdateClutter(clutter: AddClutterData) {
-    this.clutter.name = clutter.name
-    this.clutter.description = clutter.description
     this.clutterService.update(this.clutter).subscribe({
       next: (result) => {
+        this.clutter.name = clutter.name
+        this.clutter.description = clutter.description
         this.onChangeToVoteMode()
       }
     })

@@ -1,11 +1,24 @@
-<ng-container *ngIf="(hasFamily$ | async) == true; else noFamily">
-    <ng-container *ngIf="(family$ | async) as family">
-        <h2>{{family.name}}</h2>
-        <ul>
-            <li *ngFor="let member of family.members">{{member.name}}</li>
-        </ul>
-    </ng-container>
+<ng-container *ngIf="(family$ | async) as family; else noFamily">
+
+    <app-family-view
+        *ngIf="mode == 'VIEW'"
+        [family]="family"
+        [userId]="userId$ | async"
+        (onEditClicked)="changeToEditMode()"
+        (onRemoveMember)="onRemoveMember($event)"
+        (onAddMember)="onAddMember($event)"
+        ></app-family-view>
+
+    <app-family-form
+        *ngIf="mode == 'EDIT'"
+        [title]="'Edit Family'"
+        [familyToEdit]="family"
+        [actionText]="'Save'"
+        (familyData)="onUpdateFamily($event)"
+    ></app-family-form>
+
 </ng-container>
+
 <ng-template #noFamily>
     <p>You don't have a family yet!</p>
     <p> <a mat-raised-button routerLink="/family/create">Create one now</a></p>

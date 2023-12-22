@@ -20,6 +20,9 @@ export class AuthService {
     map(user => user == null ? null : user.token)
   )
   public familyId$: Observable<string | null> = this.loggedInUser.pipe(map(user => user ? user.familyId : null))
+  public userId$: Observable<string | null> = this.loggedInUser.pipe(
+    map(user => user == null ? null : user.userId)
+  )
   
   isThisUser(userId: string): Observable<boolean> {
     return this.loggedInUser.pipe(map(userDetails => userDetails.userId == userId))

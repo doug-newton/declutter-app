@@ -11,6 +11,7 @@ export interface FamilyMember {
 
 export interface Family extends AddFamilyData {
     _id: string
+    owner: FamilyMember
     members: FamilyMember[]
 }
 

@@ -9,11 +9,13 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatInputModule } from '@angular/material/input'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { MatTableModule } from '@angular/material/table'
+import { MatChipsModule } from '@angular/material/chips'
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AddClutterComponent } from './pages/add-clutter/add-clutter.component';
@@ -25,8 +27,10 @@ import { ClutterListItemComponent } from './ui/clutter-list-item/clutter-list-it
 import { ClutterFormComponent } from './ui/clutter-form/clutter-form.component';
 import { ClutterVotingCardComponent } from './ui/clutter-voting-card/clutter-voting-card.component';
 import { FamilyFormComponent } from './ui/family-form/family-form.component';
+import { FamilyViewComponent } from './ui/family-view/family-view.component';
 
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
+import { FamilyFormAddMemberComponent } from './ui/family-form-add-member/family-form-add-member.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,9 @@ import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
     ClutterVotingCardComponent,
     CreateFamilyComponent,
     FamilyFormComponent,
-    ManageFamilyComponent
+    ManageFamilyComponent,
+    FamilyViewComponent,
+    FamilyFormAddMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +59,9 @@ import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
     MatToolbarModule,
     MatInputModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatChipsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
