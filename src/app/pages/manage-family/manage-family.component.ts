@@ -33,14 +33,6 @@ export class ManageFamilyComponent implements AfterContentInit {
     })
   }
 
-  onRemoveMember(member: FamilyMember) {
-    this.familyService.removeMember(member)
-  }
-
-  onAddMember(email: string){
-    this.familyService.addMember(email)
-  }
-
   changeToEditMode() {
     this.mode = 'EDIT'
   }

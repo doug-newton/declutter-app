@@ -5,8 +5,6 @@
         [family]="family"
         [userId]="userId$ | async"
         (onEditClicked)="changeToEditMode()"
-        (onRemoveMember)="onRemoveMember($event)"
-        (onAddMember)="onAddMember($event)"
         ></app-family-view>
 
     <app-family-form

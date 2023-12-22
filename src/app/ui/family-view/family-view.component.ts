@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Family, FamilyMember } from '../../shared/models';
+import { FamilyService } from '../../shared/services/family.service';
 
 @Component({
   selector: 'app-family-view',
@@ -8,11 +9,13 @@ import { Family, FamilyMember } from '../../shared/models';
 })
 export class FamilyViewComponent {
 
+  constructor(
+    private familyService: FamilyService
+  ) { }
+
   @Input() family: Family
   @Input() userId: string
   @Output() onEditClicked = new EventEmitter()
-  @Output() onRemoveMember = new EventEmitter<FamilyMember>()
-  @Output() onAddMember = new EventEmitter<string>()
 
   cols = ['name', 'email', 'actions']
 
@@ -25,11 +28,11 @@ export class FamilyViewComponent {
   }
 
   removeMember(member: FamilyMember) {
-    this.onRemoveMember.emit(member)
+    this.familyService.removeMember(member)
   }
 
   addMember(email: string){
-    this.onAddMember.emit(email)
+    this.familyService.addMember(email)
   }
 
 }
