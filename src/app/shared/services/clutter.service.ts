@@ -31,12 +31,12 @@ export class ClutterService {
     })
   }
 
-  vote(clutter: Clutter, vote: 'keep' | 'discard'): Observable<ClutterVoteCount | null> {
-    return this.apiService.vote(clutter, vote).pipe(map(result => result.votes))
+  vote(clutter: Clutter, vote: 'keep' | 'discard'): Observable<Clutter> {
+    return this.apiService.vote(clutter, vote).pipe(map(result => result.clutter))
   }
 
-  update(clutter: Clutter): Observable<any> {
-    return this.apiService.updateClutter(clutter)
+  update(clutterId: string, clutter: AddClutterData): Observable<any> {
+    return this.apiService.updateClutter(clutterId, clutter)
   }
 
   delete(clutter: Clutter) {
@@ -47,5 +47,9 @@ export class ClutterService {
         this.clutterSubject$.next(this.clutter)
       }
     })
+  }
+
+  deleteVote(clutterId: string): Observable<Clutter> {
+    return this.apiService.deleteVote(clutterId).pipe(map(result => result.clutter))
   }
 }

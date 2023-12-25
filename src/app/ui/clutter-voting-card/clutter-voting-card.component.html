@@ -21,9 +21,13 @@
         {{clutter.description}}
     </mat-card-content>
     <mat-card-actions>
-        <div class="button-row">
+        <div class="button-row" *ngIf="userVote == null">
             <button mat-raised-button color="accent" (click)="voteKeep()">Keep</button>
             <button mat-raised-button color="warn" (click)="voteDiscard()">Discard</button>
+        </div>
+        <div class="button-row" *ngIf="userVote != null">
+            <span>You voted to {{userVote}} this</span>
+            <button mat-raised-button (click)="deleteVote()">Undo</button>
         </div>
     </mat-card-actions>
 </mat-card>

@@ -62,18 +62,19 @@ exports.vote = (req, res) => {
         Clutter.aggregate(Aggregations.countVotes(clutterId)).then(voteCounts => {
             voteCounts = voteCounts[0]
 
-            Clutter.updateOne(
+            Clutter.findOneAndUpdate(
                 { _id: new mongoose.Types.ObjectId(clutterId), familyId: new mongoose.Types.ObjectId(familyId) },
                 {
                     voteCounts: {
                         keep: voteCounts.keep ?? 0,
                         discard: voteCounts.discard ?? 0
                     }
-                }
-            ).then(result => {
+                },
+                { new: true }
+            ).then(clutter => {
                 res.status(201).json({
                     message: 'vote successful',
-                    votes: voteCounts
+                    clutter: clutter
                 })
             })
 
@@ -139,6 +140,56 @@ exports.delete = (req, res) => {
         console.log(error)
         res.status(500).json({
             message: 'clutter deletion failed'
+        })
+    })
+}
+
+exports.deleteVote = (req, res) => {
+    const userId = req.userData.userId
+    const familyId = req.userData.familyId
+    const clutterId = req.params.clutterId
+
+    Clutter.updateOne(
+        { 
+            _id: new mongoose.Types.ObjectId(clutterId),
+            familyId: new mongoose.Types.ObjectId(familyId)
+        },
+        { $pull: { votes: { userId: new mongoose.Types.ObjectId(userId) } } }
+    ).then(result => {
+        if (result.matchedCount != 1) {
+            res.status(401).json({
+                message: 'Unauthorised'
+            })
+            return
+        }
+
+        Clutter.aggregate(Aggregations.countVotes(clutterId)).then(voteCounts => {
+            voteCounts = voteCounts[0] ?? {}
+            Clutter.findOneAndUpdate(
+                { _id: new mongoose.Types.ObjectId(clutterId), familyId: new mongoose.Types.ObjectId(familyId) },
+                {
+                    voteCounts: {
+                        keep: voteCounts.keep ?? 0,
+                        discard: voteCounts.discard ?? 0
+                    }
+                },
+                { new: true }
+            )
+                .populate('addedBy', '_id name email')
+                .then(clutter => {
+                    res.status(201).json({
+                        message: 'vote deleted successfully',
+                        clutter: clutter
+                    })
+                })
+        }).catch(error => {
+            res.status(500).json({
+                message: 'vote aggregation failed'
+            })
+        })
+    }).catch(error => {
+        res.status(500).json({
+            message: "vote deletion failed"
         })
     })
 }

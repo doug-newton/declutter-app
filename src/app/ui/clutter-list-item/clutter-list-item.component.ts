@@ -26,7 +26,7 @@ export class ClutterListItemComponent {
   }
 
   onUpdateClutter(clutter: AddClutterData) {
-    this.clutterService.update(this.clutter).subscribe({
+    this.clutterService.update(this.clutter._id, clutter).subscribe({
       next: (result) => {
         this.clutter.name = clutter.name
         this.clutter.description = clutter.description

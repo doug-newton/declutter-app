@@ -47,12 +47,18 @@ export interface ClutterVoteCount {
   discard: number
 }
 
+export interface ClutterVote {
+  userId: string
+  vote: 'keep' | 'discard'
+}
+
 export interface Clutter extends AddClutterData {
   _id: string
   addedBy: FamilyMember
   name: string
   description: string | null
   voteCounts: ClutterVoteCount
+  votes: ClutterVote[]
 }
 
 export interface GetClutterResponse {
@@ -62,7 +68,7 @@ export interface GetClutterResponse {
 
 export interface ClutterVoteResult {
   message: string
-  votes: ClutterVoteCount
+  voteCounts: ClutterVoteCount
 }
 
 //  AUTH
