@@ -23,7 +23,9 @@ exports.create = (req, res) => {
 }
 
 exports.getAll = (req, res) => {
-    Clutter.find({ familyId: req.userData.familyId }).then(result => {
+    Clutter.find({ familyId: req.userData.familyId })
+        .populate('addedBy', '_id name email')
+        .then(result => {
         res.status(200).json({
             message: 'clutter retrieved successfully',
             clutter: result

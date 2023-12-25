@@ -14,18 +14,14 @@ export class ClutterVotingCardComponent {
 
   constructor(
     private clutterService: ClutterService,
-    private usersService: UsersService,
     private auth: AuthService
   ) { }
 
   @Input() clutter!: Clutter
   @Output() changeToEditMode = new EventEmitter()
 
-  addedBy$: Observable<string> = of(this.clutter).pipe(
-    switchMap(clutter => this.usersService.getUserDetails(this.clutter.addedBy).pipe(
-      map(details => details.name))))
   isThisUser$: Observable<boolean> = of(this.clutter).pipe(
-    switchMap(clutter => this.auth.isThisUser(this.clutter.addedBy))
+    switchMap(clutter => this.auth.isThisUser(this.clutter.addedBy._id))
   )
 
   onEdit() {

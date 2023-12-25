@@ -49,7 +49,7 @@ export interface ClutterVoteCount {
 
 export interface Clutter extends AddClutterData {
   _id: string
-  addedBy: string
+  addedBy: FamilyMember
   name: string
   description: string | null
   voteCounts: ClutterVoteCount
