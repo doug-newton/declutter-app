@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, map, tap } from 'rxjs';
 import { LoginResult, UserCredentials, SignupDetails, SignupResult } from '../models';
+import { UserApiService } from '../api-services/user-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { LoginResult, UserCredentials, SignupDetails, SignupResult } from '../mo
 export class AuthService {
 
   constructor(
-    private http: HttpClient,
+    private apiService: UserApiService,
     private router: Router
   ) { }
 
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   login(credentials: UserCredentials) {
-    this.http.post<LoginResult>('http://localhost:3000/api/user/login', credentials).subscribe({
+    this.apiService.login(credentials).subscribe({
       next: ((result: LoginResult) => {
         this.saveUserCredentials(result)
         this.loggedInUser.next(result)
@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<any> {
-    return this.http.get<LoginResult>('http://localhost:3000/api/user/refresh').pipe(
+    return this.apiService.refresh().pipe(
       tap((result: LoginResult) => {
         this.deleteUserCredentials()
         this.saveUserCredentials(result)
@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   register(credentials: SignupDetails) {
-    this.http.post<SignupResult>('http://localhost:3000/api/user/signup', credentials).subscribe({
+    this.apiService.signup(credentials).subscribe({
       next: ((result: SignupResult) => {
         this.router.navigate(['/auth/login'])
       })

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { AddClutterData, AddClutterResponse, Clutter, GetClutterResponse, ClutterVoteCount, ClutterVoteResult } from '../models';
+import { ClutterApiService } from '../api-services/clutter-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,11 @@ import { AddClutterData, AddClutterResponse, Clutter, GetClutterResponse, Clutte
 export class ClutterService {
 
   constructor(
-    private http: HttpClient
+    private apiService: ClutterApiService
   ) { }
 
   addClutter(data: AddClutterData) : Observable<AddClutterResponse> {
-    return this.http.post<AddClutterResponse>('http://localhost:3000/api/clutter/', data)
+    return this.apiService.addClutter(data)
   }
 
   private clutter: Clutter[]
@@ -21,7 +21,7 @@ export class ClutterService {
   clutter$: Observable<Clutter[]> = this.clutterSubject$
 
   getClutter() {
-    this.http.get<GetClutterResponse>('http://localhost:3000/api/clutter').pipe(
+    this.apiService.getClutter().pipe(
       map(response => response.clutter)
     ).subscribe({
       next: clutter => {
@@ -32,25 +32,15 @@ export class ClutterService {
   }
 
   vote(clutter: Clutter, vote: 'keep' | 'discard'): Observable<ClutterVoteCount | null> {
-    return this.http.post<ClutterVoteResult>(
-      `http://localhost:3000/api/clutter/${clutter._id}/vote`,
-      {
-        vote: vote
-      }
-    ).pipe(map(result => result.votes))
+    return this.apiService.vote(clutter, vote).pipe(map(result => result.votes))
   }
 
   update(clutter: Clutter): Observable<any> {
-    return this.http.put<any>(
-      `http://localhost:3000/api/clutter/${clutter._id}`,
-      clutter
-   )
+    return this.apiService.updateClutter(clutter)
   }
 
   delete(clutter: Clutter) {
-    this.http.delete<any>(
-      `http://localhost:3000/api/clutter/${clutter._id}`,
-    ).subscribe({
+    this.apiService.delete(clutter).subscribe({
       next: result => {
         const newClutter = this.clutter.filter(c => c._id != clutter._id)
         this.clutter = newClutter

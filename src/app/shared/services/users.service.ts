@@ -2,15 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserDetails } from '../models';
+import { UserApiService } from '../api-services/user-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private apiService: UserApiService
+  ) { }
 
   getUserDetails(userId: string): Observable<UserDetails> {
-    return this.http.get<UserDetails>(`http://localhost:3000/api/user/${userId}/details`)
+    return this.apiService.getUserDetails(userId)
   }
 }

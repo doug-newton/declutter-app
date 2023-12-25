@@ -4,6 +4,7 @@ import { AddFamilyData, AddFamilyResult, Family, FamilyMember, FamilyMembersResu
 import { BehaviorSubject, Observable, Subject, filter, map, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FamilyApiService } from '../api-services/family-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,14 @@ export class FamilyService {
   constructor(
     private auth: AuthService,
     private http: HttpClient,
+    private apiService: FamilyApiService,
     private router: Router
   ) { }
 
   loadFamily(): void {
     this.auth.familyId$.pipe(
       filter((familyId) => familyId != null),
-      switchMap(familyId => this.http.get<GetFamilyResult>(`http://localhost:3000/api/family/${familyId}`).pipe(
+      switchMap(familyId => this.apiService.getFamily(familyId).pipe(
         map(familyResult => familyResult.family)))
     ).subscribe({
       next: (family) => {
@@ -35,11 +37,11 @@ export class FamilyService {
   family$: Observable<Family> = this.familySubject$
 
   createFamily(family: AddFamilyData): Observable<AddFamilyResult> {
-    return this.http.post<AddFamilyResult>('http://localhost:3000/api/family', family)
+    return this.apiService.createFamily(family)
   }
 
   updateFamily(family: AddFamilyData) {
-    this.http.put<any>(`http://localhost:3000/api/family/${this.family._id}`, family).subscribe({
+    this.apiService.updateFamily(this.family._id, family).subscribe({
       next: result => {
         this.family.name = family.name
         this.familySubject$.next(this.family)
@@ -49,7 +51,7 @@ export class FamilyService {
   }
 
   removeMember(member: FamilyMember) {
-    this.http.delete<{family: Family}>(`http://localhost:3000/api/family/${this.family._id}/members/${member._id}`).subscribe({
+    this.apiService.removeMember(this.family._id, member._id).subscribe({
       next: response => {
         this.family = response.family
         this.familySubject$.next(this.family)
@@ -58,7 +60,7 @@ export class FamilyService {
   }
 
   addMember(email: string) {
-    this.http.post<{ family: Family }>(`http://localhost:3000/api/family/${this.family._id}/members`, { email: email }).subscribe({
+    this.apiService.addMember(this.family._id, email).subscribe({
       next: response => {
         this.family = response.family
         this.familySubject$.next(this.family)
