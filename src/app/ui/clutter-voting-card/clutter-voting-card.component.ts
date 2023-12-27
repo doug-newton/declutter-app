@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { UsersService } from '../../shared/services/users.service';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
-import { Observable, Subscription, map, of, switchMap } from 'rxjs';
+import { Observable, combineLatest, map, switchMap } from 'rxjs';
 import { ClutterService } from '../../shared/services/clutter.service';
 import { Clutter } from '../../shared/models';
 
@@ -10,82 +9,42 @@ import { Clutter } from '../../shared/models';
   templateUrl: './clutter-voting-card.component.html',
   styleUrl: './clutter-voting-card.component.scss'
 })
-export class ClutterVotingCardComponent implements OnInit, OnDestroy {
+export class ClutterVotingCardComponent implements OnChanges {
 
   constructor(
     private clutterService: ClutterService,
     private auth: AuthService
   ) { }
-  
-  ngOnInit(): void {
-    this.userIdSub = this.auth.userId$.subscribe({
-      next: id => {
-        this.userId = id
-        this.userVote = this.findUserVote()
-      }
-    })
-  }
 
-  ngOnDestroy(): void {
-    this.userIdSub.unsubscribe()
-  }
-
-  @Input() clutter!: Clutter
+  @Input({ required: true }) clutterId: string
   @Output() changeToEditMode = new EventEmitter()
-  userIdSub: Subscription
-  userId: string
-  userVote: string | null
 
-  findUserVote(): string | null {
-    for (let vote of this.clutter.votes) {
-      if (vote.userId == this.userId) {
-        return vote.vote
-      }
-    }
-    return null
-  }
+  clutter$: Observable<Clutter>
+  isThisUser$: Observable<boolean>
+  hasDescription$: Observable<boolean>
+  userVote$: Observable<string | null>
 
-  isThisUser$: Observable<boolean> = of(this.clutter).pipe(
-    switchMap(clutter => this.auth.isThisUser(this.clutter.addedBy._id))
-  )
+  vm$: Observable<{
+    clutter: Clutter,
+    isThisUser: boolean,
+    hasDescription: boolean,
+    userVote: string | null
+  }>
 
   onEdit() {
     this.changeToEditMode.emit()
   }
 
   onDelete() {
-    this.clutterService.delete(this.clutter)
-  }
-
-  hasDescription() {
-    if (this.clutter.description == null) return false
-    if (this.clutter.description === '') return false
-    return true
+    this.clutterService.delete(this.clutterId)
   }
 
   vote(vote: 'keep' | 'discard') {
-    this.clutterService.vote(this.clutter, vote).subscribe({
-      next: (res) => {
-        this.clutter.voteCounts.keep = res.voteCounts.keep ?? 0
-        this.clutter.voteCounts.discard = res.voteCounts.discard ?? 0
-        this.clutter.votes = res.votes
-        this.userVote = this.findUserVote()
-      },
-      error: (error) => {
-        console.log(error)
-      }
-    })
+    this.clutterService.vote(this.clutterId, vote)
   }
 
   deleteVote() {
-    this.clutterService.deleteVote(this.clutter._id).subscribe({
-      next: (res) => {
-        this.clutter.voteCounts.keep = res.voteCounts.keep ?? 0
-        this.clutter.voteCounts.discard = res.voteCounts.discard ?? 0
-        this.clutter.votes = res.votes
-        this.userVote = this.findUserVote()
-      }
-    })
+    this.clutterService.deleteVote(this.clutterId)
   }
 
   voteKeep() {
@@ -94,5 +53,50 @@ export class ClutterVotingCardComponent implements OnInit, OnDestroy {
 
   voteDiscard() {
     this.vote('discard')
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.hasOwnProperty('clutterId')) {
+      return
+    }
+
+    this.clutter$ = this.clutterService.getSingleClutterObservable(this.clutterId)
+
+    this.isThisUser$ = this.clutter$.pipe(
+      switchMap(clutter => this.auth.isThisUser(clutter.addedBy._id))
+    )
+
+    this.hasDescription$ = this.clutter$.pipe(map(clutter => {
+      if (clutter.description === null) return false
+      if (clutter.description === '') return false
+      return true
+    }))
+
+    this.userVote$ = this.clutter$.pipe(
+      switchMap(clutter => this.auth.userId$.pipe(
+        map(userId => {
+          for (let vote of clutter.votes) {
+            if (vote.userId === userId) {
+              return vote.vote
+            }
+          }
+          return null
+        })
+      ))
+    )
+
+    this.vm$ = combineLatest([
+      this.clutter$,
+      this.isThisUser$,
+      this.hasDescription$,
+      this.userVote$
+    ]).pipe(
+      map(([
+        clutter,
+        isThisUser,
+        hasDescription,
+        userVote
+      ]) => ({ clutter, isThisUser, hasDescription, userVote }))
+    )
   }
 }

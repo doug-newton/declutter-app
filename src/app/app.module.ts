@@ -32,6 +32,7 @@ import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { FamilyFormAddMemberComponent } from './ui/family-form-add-member/family-form-add-member.component';
 import { FamilyEditComponent } from './pages/family-edit/family-edit.component';
 import { NoFamilyMessageComponent } from './ui/no-family-message/no-family-message.component';
+import { ClutterEditComponent } from './ui/clutter-edit/clutter-edit.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { NoFamilyMessageComponent } from './ui/no-family-message/no-family-messa
     FamilyViewComponent,
     FamilyFormAddMemberComponent,
     FamilyEditComponent,
-    NoFamilyMessageComponent
+    NoFamilyMessageComponent,
+    ClutterEditComponent
   ],
   imports: [
     BrowserModule,

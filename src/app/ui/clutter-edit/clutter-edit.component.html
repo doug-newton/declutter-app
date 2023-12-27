@@ -1,0 +1,6 @@
+    <app-clutter-form *ngIf="clutter$ | async as clutter"
+        [title]="'Edit Clutter Item'"
+        [actionText]="'Save'"
+        [clutterToEdit]="clutter"
+        (clutterData)="onUpdateClutter($event)"
+        ></app-clutter-form>

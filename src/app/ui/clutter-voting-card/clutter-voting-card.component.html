@@ -1,33 +1,29 @@
-<mat-card>
+<mat-card *ngIf="vm$ | async as vm">
     <mat-card-header>
-        <mat-card-title>{{clutter.name}}
-            <button 
-                *ngIf="isThisUser$|async"
-                mat-raised-button color="primary"
-                (click)="onEdit()"
-            >edit</button>
-            <button 
-                *ngIf="isThisUser$|async"
-                mat-raised-button color="warn"
-                (click)="onDelete()"
-            >delete</button>
-            </mat-card-title>
-        <mat-card-subtitle>added by {{clutter.addedBy.name}}</mat-card-subtitle>
+        <mat-card-title>{{vm.clutter.name}}
+            <ng-container *ngIf="isThisUser$|async">
+                <button mat-raised-button color="primary" (click)="onEdit()">edit</button>
+                <button mat-raised-button color="warn" (click)="onDelete()">delete</button>
+            </ng-container>
+        </mat-card-title>
+        <mat-card-subtitle>added by {{vm.clutter.addedBy.name}}</mat-card-subtitle>
         <mat-card-subtitle>
-            Keep: {{ clutter.voteCounts.keep }}, Discard: {{ clutter.voteCounts.discard }}
+            Keep: {{ vm.clutter.voteCounts.keep }}, Discard: {{ vm.clutter.voteCounts.discard }}
         </mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content *ngIf="hasDescription()">
-        {{clutter.description}}
+    <mat-card-content *ngIf="vm.hasDescription">
+        {{vm.clutter.description}}
     </mat-card-content>
     <mat-card-actions>
-        <div class="button-row" *ngIf="userVote == null">
-            <button mat-raised-button color="accent" (click)="voteKeep()">Keep</button>
-            <button mat-raised-button color="warn" (click)="voteDiscard()">Discard</button>
-        </div>
-        <div class="button-row" *ngIf="userVote != null">
-            <span>You voted to {{userVote}} this</span>
+        <div class="button-row" *ngIf="vm.userVote; else notVotedYet">
+            <span>You voted to {{vm.userVote}} this</span>
             <button mat-raised-button (click)="deleteVote()">Undo</button>
         </div>
+        <ng-template #notVotedYet>
+            <div class="button-row">
+                <button mat-raised-button color="accent" (click)="voteKeep()">Keep</button>
+                <button mat-raised-button color="warn" (click)="voteDiscard()">Discard</button>
+            </div>
+        </ng-template>
     </mat-card-actions>
 </mat-card>

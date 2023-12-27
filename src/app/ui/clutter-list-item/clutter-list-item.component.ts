@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Clutter, AddClutterData } from '../../shared/models';
-import { ClutterService } from '../../shared/services/clutter.service';
 
 @Component({
   selector: 'app-clutter-list-item',
@@ -9,11 +7,7 @@ import { ClutterService } from '../../shared/services/clutter.service';
 })
 export class ClutterListItemComponent {
 
-  constructor(
-    private clutterService: ClutterService
-  ) { }
-
-  @Input() clutter!: Clutter
+  @Input({ required: true }) clutterId: string
 
   mode: 'VOTE' | 'EDIT' = 'VOTE'
 
@@ -23,15 +17,5 @@ export class ClutterListItemComponent {
 
   onChangeToVoteMode() {
     this.mode = 'VOTE'
-  }
-
-  onUpdateClutter(clutter: AddClutterData) {
-    this.clutterService.update(this.clutter._id, clutter).subscribe({
-      next: (result) => {
-        this.clutter.name = clutter.name
-        this.clutter.description = clutter.description
-        this.onChangeToVoteMode()
-      }
-    })
   }
 }

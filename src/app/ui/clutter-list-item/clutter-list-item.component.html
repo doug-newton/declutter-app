@@ -1,13 +1,11 @@
 <app-clutter-voting-card 
     *ngIf="mode === 'VOTE'" 
-    [clutter]="clutter" 
+    [clutterId]="clutterId"
     (changeToEditMode)="onChangeToEditMode()"
     ></app-clutter-voting-card>
 
-<app-clutter-form
+<app-clutter-edit
     *ngIf="mode === 'EDIT'"
-    [title]="'Edit Clutter Item'"
-    [actionText]="'Save'"
-    [clutterToEdit]="clutter"
-    (clutterData)="onUpdateClutter($event)"
-    ></app-clutter-form>
+    [clutterId]="clutterId"
+    (clutterSaved)="onChangeToVoteMode()"
+></app-clutter-edit>
