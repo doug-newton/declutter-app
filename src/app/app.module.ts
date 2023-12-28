@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table'
 import { MatChipsModule } from '@angular/material/chips'
+import { MatTabsModule } from '@angular/material/tabs'
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -65,7 +66,8 @@ import { ClutterEditComponent } from './ui/clutter-edit/clutter-edit.component';
     MatCardModule,
     MatButtonModule,
     MatTableModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true

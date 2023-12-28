@@ -22,7 +22,7 @@ export class FamilyViewComponent implements OnInit {
   }
 
   vm$ = combineLatest([
-    this.familyService.family$.pipe(filter(family => family != null)),
+    this.familyService.family$,
     this.auth.userId$
   ]).pipe(
     map(([family, userId]) => ({

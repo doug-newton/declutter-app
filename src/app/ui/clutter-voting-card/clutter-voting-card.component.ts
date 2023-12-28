@@ -17,17 +17,20 @@ export class ClutterVotingCardComponent implements OnChanges {
   ) { }
 
   @Input({ required: true }) clutterId: string
+  @Input() showVoteCounts: boolean = true
+  @Input() showUndoButton: boolean = true
+  @Input() showYourVote: boolean = true
+  @Input() showEditButtons: boolean = true
+
   @Output() changeToEditMode = new EventEmitter()
 
   clutter$: Observable<Clutter>
   isThisUser$: Observable<boolean>
-  hasDescription$: Observable<boolean>
   userVote$: Observable<string | null>
 
   vm$: Observable<{
     clutter: Clutter,
     isThisUser: boolean,
-    hasDescription: boolean,
     userVote: string | null
   }>
 
@@ -66,12 +69,6 @@ export class ClutterVotingCardComponent implements OnChanges {
       switchMap(clutter => this.auth.isThisUser(clutter.addedBy._id))
     )
 
-    this.hasDescription$ = this.clutter$.pipe(map(clutter => {
-      if (clutter.description === null) return false
-      if (clutter.description === '') return false
-      return true
-    }))
-
     this.userVote$ = this.clutter$.pipe(
       switchMap(clutter => this.auth.userId$.pipe(
         map(userId => {
@@ -88,15 +85,13 @@ export class ClutterVotingCardComponent implements OnChanges {
     this.vm$ = combineLatest([
       this.clutter$,
       this.isThisUser$,
-      this.hasDescription$,
       this.userVote$
     ]).pipe(
       map(([
         clutter,
         isThisUser,
-        hasDescription,
         userVote
-      ]) => ({ clutter, isThisUser, hasDescription, userVote }))
+      ]) => ({ clutter, isThisUser, userVote }))
     )
   }
 }

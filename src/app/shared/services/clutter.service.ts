@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, map, switchMap, tap } from 'rxjs';
 import { AddClutterData, AddClutterResponse, Clutter } from '../models';
 import { ClutterApiService } from '../api-services/clutter-api.service';
+import { FamilyService } from './family.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,9 @@ import { ClutterApiService } from '../api-services/clutter-api.service';
 export class ClutterService {
 
   constructor(
-    private apiService: ClutterApiService
+    private apiService: ClutterApiService,
+    private familyService: FamilyService,
+    private auth: AuthService
   ) { }
 
   addClutter(data: AddClutterData) : Observable<AddClutterResponse> {
@@ -18,7 +22,71 @@ export class ClutterService {
 
   private clutter: Clutter[]
   private clutterSubject$: Subject<Clutter[]> = new BehaviorSubject<Clutter[]>([])
+
   clutter$: Observable<Clutter[]> = this.clutterSubject$
+
+  clutterPending$: Observable<Clutter[]> = combineLatest([
+    this.familyService.numMembers$,
+    this.auth.userId$,
+    this.clutter$
+  ]).pipe(
+    map(([numMembers, userId, clutterList]) =>
+      clutterList.filter(item =>
+        item.votes.length < numMembers &&
+        item.votes.filter(vote => vote.userId == userId).length != 0)
+    )
+  )
+
+  clutterVoted$: Observable<Clutter[]> = this.familyService.numMembers$.pipe(
+    switchMap(numMembers => 
+      this.clutter$.pipe(map(clutterList =>
+        clutterList.filter(item => item.votes.length == numMembers)
+      ))
+    )
+  )
+
+  clutterToKeep$: Observable<Clutter[]> = this.clutterVoted$.pipe(
+    map(clutterList => clutterList.filter(item => {
+      return item.voteCounts.discard == 0
+    }))
+  )
+
+  clutterToDiscard$: Observable<Clutter[]> = this.clutterVoted$.pipe(
+    map(clutterList => clutterList.filter(item => {
+      return item.voteCounts.keep == 0
+    }))
+  )
+
+  clutterMixedResults$: Observable<Clutter[]> = this.clutterVoted$.pipe(
+    map(clutterList => clutterList.filter(item => {
+      return item.voteCounts.keep != 0 && item.voteCounts.discard != 0
+    }))
+  )
+
+  clutterYourVotes$: Observable<Clutter[]> = this.auth.userId$.pipe(
+    switchMap(userId => 
+      this.clutter$.pipe(map(clutterList => {
+        return clutterList.filter(item => {
+          return item.votes.filter(vote => vote.userId == userId).length != 0
+        })
+      })))
+  )
+
+  clutterYourPendingVotes$: Observable<Clutter[]> = this.auth.userId$.pipe(
+    switchMap(userId => 
+      this.clutter$.pipe(map(clutterList => {
+        return clutterList.filter(item => {
+          return item.votes.filter(vote => vote.userId == userId).length == 0
+        })
+      })))
+  )
+
+  clutterAddedByYou$: Observable<Clutter[]> = this.auth.userId$.pipe(
+    switchMap(userId => 
+      this.clutter$.pipe(map(clutterList => {
+        return clutterList.filter(item => item.addedBy._id == userId)
+      })))
+  )
 
   getSingleClutterObservable(clutterId: string): Observable<Clutter> {
     return this.clutter$.pipe(
