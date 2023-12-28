@@ -1,6 +1,10 @@
 <app-clutter-voting-card 
     *ngIf="mode === 'VOTE'" 
     [clutterId]="clutterId"
+    [showVoteCounts]="showVoteCounts"
+    [showUndoButton]="showUndoButton"
+    [showYourVote]="showYourVote"
+    [showEditButtons]="showEditButtons"
     (changeToEditMode)="onChangeToEditMode()"
     ></app-clutter-voting-card>
 

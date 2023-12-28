@@ -8,6 +8,10 @@ import { Component, Input } from '@angular/core';
 export class ClutterListItemComponent {
 
   @Input({ required: true }) clutterId: string
+  @Input() showVoteCounts: boolean = true
+  @Input() showUndoButton: boolean = true
+  @Input() showYourVote: boolean = true
+  @Input() showEditButtons: boolean = true
 
   mode: 'VOTE' | 'EDIT' = 'VOTE'
 

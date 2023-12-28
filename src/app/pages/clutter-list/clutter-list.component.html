@@ -51,10 +51,10 @@
             ></app-clutter-voting-card>
     </mat-tab>
     <mat-tab label="Added by you">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterAddedByYou$ | async)"
+        <app-clutter-list-item *ngFor="let clutter of (clutterAddedByYou$ | async)"
             [clutterId]="clutter._id"
             [showVoteCounts]="false"
             [showYourVote]="false"
-            ></app-clutter-voting-card>
+            ></app-clutter-list-item>
     </mat-tab>
 </mat-tab-group>
