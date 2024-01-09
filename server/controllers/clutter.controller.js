@@ -23,12 +23,11 @@ exports.create = (req, res) => {
 }
 
 exports.getAll = (req, res) => {
-    Clutter.find({ familyId: req.userData.familyId })
-        .populate('addedBy', '_id name email')
-        .then(result => {
+    const familyId = req.userData.familyId
+    Clutter.aggregate(Aggregations.findAndPopulateClutterForFamily(familyId)).then(clutter => {
         res.status(200).json({
             message: 'clutter retrieved successfully',
-            clutter: result
+            clutter: clutter
         })
     }).catch(error => {
         res.status(500).json({

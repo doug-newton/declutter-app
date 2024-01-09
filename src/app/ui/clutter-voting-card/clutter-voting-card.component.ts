@@ -21,6 +21,7 @@ export class ClutterVotingCardComponent implements OnChanges {
   @Input() showUndoButton: boolean = true
   @Input() showYourVote: boolean = true
   @Input() showEditButtons: boolean = true
+  @Input() showWhoVoted: boolean = false
 
   @Output() changeToEditMode = new EventEmitter()
 

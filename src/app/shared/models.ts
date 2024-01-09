@@ -59,6 +59,8 @@ export interface Clutter extends AddClutterData {
   description: string | null
   voteCounts: ClutterVoteCount
   votes: ClutterVote[]
+  membersVoted: FamilyMember[]
+  membersToVote: FamilyMember[]
 }
 
 export interface GetClutterResponse {
