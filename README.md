@@ -56,7 +56,7 @@ Provides a platform where you and your family add items of clutter and vote on w
 
 ### See mixed results, where everyone's voted but not unanimously
 
-![clutter mixed reults](./screenshots/clutter-mixed-reults.PNG)
+![clutter mixed results](./screenshots/clutter-mixed-results.PNG)
 
 ### See your votes
 
