@@ -23,9 +23,9 @@ import { AddClutterComponent } from './pages/add-clutter/add-clutter.component';
 import { ClutterListComponent } from './pages/clutter-list/clutter-list.component';
 import { CreateFamilyComponent } from './pages/create-family/create-family.component';
 
-import { ClutterListItemComponent } from './ui/clutter-list-item/clutter-list-item.component';
+import { ManageClutterItemComponent } from './ui/manage-clutter-item/manage-clutter-item.component';
 import { ClutterFormComponent } from './ui/clutter-form/clutter-form.component';
-import { ClutterVotingCardComponent } from './ui/clutter-voting-card/clutter-voting-card.component';
+import { EditableClutterCard } from './ui/editable-clutter-card/editable-clutter-card.component';
 import { FamilyFormComponent } from './ui/family-form/family-form.component';
 import { FamilyViewComponent } from './pages/family-view/family-view.component';
 
@@ -34,6 +34,11 @@ import { FamilyFormAddMemberComponent } from './ui/family-form-add-member/family
 import { FamilyEditComponent } from './pages/family-edit/family-edit.component';
 import { NoFamilyMessageComponent } from './ui/no-family-message/no-family-message.component';
 import { ClutterEditComponent } from './ui/clutter-edit/clutter-edit.component';
+import { ClutterVoteCardComponent } from './ui/clutter-cards/clutter-vote-card/clutter-vote-card.component';
+import { FamilyToVoteCardComponent } from './ui/clutter-cards/family-to-vote-card/family-to-vote-card.component';
+import { FinalisedVoteCardComponent } from './ui/clutter-cards/finalised-vote-card/finalised-vote-card.component';
+import { MixedVoteCardComponent } from './ui/clutter-cards/mixed-vote-card/mixed-vote-card.component';
+import { YourVoteCardComponent } from './ui/clutter-cards/your-vote-card/your-vote-card.component';
 
 @NgModule({
   declarations: [
@@ -43,16 +48,21 @@ import { ClutterEditComponent } from './ui/clutter-edit/clutter-edit.component';
     RegisterComponent,
     AddClutterComponent,
     ClutterListComponent,
-    ClutterListItemComponent,
+    ManageClutterItemComponent,
     ClutterFormComponent,
-    ClutterVotingCardComponent,
+    EditableClutterCard,
     CreateFamilyComponent,
     FamilyFormComponent,
     FamilyViewComponent,
     FamilyFormAddMemberComponent,
     FamilyEditComponent,
     NoFamilyMessageComponent,
-    ClutterEditComponent
+    ClutterEditComponent,
+    ClutterVoteCardComponent,
+    FamilyToVoteCardComponent,
+    FinalisedVoteCardComponent,
+    MixedVoteCardComponent,
+    YourVoteCardComponent
   ],
   imports: [
     BrowserModule,

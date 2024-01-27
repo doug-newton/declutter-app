@@ -1,0 +1,11 @@
+<app-editable-clutter-card 
+    *ngIf="mode === 'VIEW'" 
+    [clutterId]="clutterId"
+    (changeToEditMode)="onChangeToEditMode()"
+    ></app-editable-clutter-card>
+
+<app-clutter-edit
+    *ngIf="mode === 'EDIT'"
+    [clutterId]="clutterId"
+    (clutterSaved)="onChangeToVoteMode()"
+></app-clutter-edit>

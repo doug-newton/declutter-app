@@ -6,56 +6,45 @@
     (selectedIndexChange)="onTabChange($event)"
     >
     <mat-tab label="Vote here">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterYourPendingVotes$ | async)"
+        <app-clutter-vote-card 
+            *ngFor="let clutter of (clutterYourPendingVotes$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-clutter-vote-card>
     </mat-tab>
     <mat-tab label="Family to vote">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterPending$ | async)"
+        <app-family-to-vote-card
+            *ngFor="let clutter of (clutterPending$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false"
-            [showEditButtons]="false"
-            [showWhoVoted]="true"
-            ></app-clutter-voting-card>
+        ></app-family-to-vote-card>
     </mat-tab>
     <mat-tab label="Keep">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterToKeep$ | async)"
+        <app-finalised-vote-card
+            *ngFor="let clutter of (clutterToKeep$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false" 
-            [showYourVote]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-finalised-vote-card>
     </mat-tab>
     <mat-tab label="Discard">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterToDiscard$ | async)"
+        <app-finalised-vote-card
+            *ngFor="let clutter of (clutterToDiscard$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false" 
-            [showYourVote]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-finalised-vote-card>
     </mat-tab>
     <mat-tab label="Mixed Results">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterMixedResults$ | async)"
+        <app-mixed-vote-card
+            *ngFor="let clutter of (clutterMixedResults$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="true" 
-            [showYourVote]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-mixed-vote-card>
     </mat-tab>
     <mat-tab label="Your Votes">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterYourVotes$ | async)"
+        <app-your-vote-card
+            *ngFor="let clutter of (clutterYourVotes$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-your-vote-card>
     </mat-tab>
     <mat-tab label="Added by you">
-        <app-clutter-list-item *ngFor="let clutter of (clutterAddedByYou$ | async)"
+        <app-manage-clutter-item 
+            *ngFor="let clutter of (clutterAddedByYou$ | async)"
             [clutterId]="clutter._id"
-            [showVoteCounts]="false"
-            [showYourVote]="false"
-            ></app-clutter-list-item>
+            ></app-manage-clutter-item>
     </mat-tab>
 </mat-tab-group>
