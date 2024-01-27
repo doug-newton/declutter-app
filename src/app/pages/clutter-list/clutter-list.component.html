@@ -36,11 +36,10 @@
         ></app-mixed-vote-card>
     </mat-tab>
     <mat-tab label="Your Votes">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterYourVotes$ | async)"
+        <app-your-vote-card
+            *ngFor="let clutter of (clutterYourVotes$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-your-vote-card>
     </mat-tab>
     <mat-tab label="Added by you">
         <app-clutter-list-item *ngFor="let clutter of (clutterAddedByYou$ | async)"

@@ -38,6 +38,7 @@ import { ClutterVoteCardComponent } from './ui/clutter-cards/clutter-vote-card/c
 import { FamilyToVoteCardComponent } from './ui/clutter-cards/family-to-vote-card/family-to-vote-card.component';
 import { FinalisedVoteCardComponent } from './ui/clutter-cards/finalised-vote-card/finalised-vote-card.component';
 import { MixedVoteCardComponent } from './ui/clutter-cards/mixed-vote-card/mixed-vote-card.component';
+import { YourVoteCardComponent } from './ui/clutter-cards/your-vote-card/your-vote-card.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { MixedVoteCardComponent } from './ui/clutter-cards/mixed-vote-card/mixed
     ClutterVoteCardComponent,
     FamilyToVoteCardComponent,
     FinalisedVoteCardComponent,
-    MixedVoteCardComponent
+    MixedVoteCardComponent,
+    YourVoteCardComponent
   ],
   imports: [
     BrowserModule,
