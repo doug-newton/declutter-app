@@ -6,11 +6,10 @@
     (selectedIndexChange)="onTabChange($event)"
     >
     <mat-tab label="Vote here">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterYourPendingVotes$ | async)"
+        <app-clutter-vote-card 
+            *ngFor="let clutter of (clutterYourPendingVotes$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-clutter-vote-card>
     </mat-tab>
     <mat-tab label="Family to vote">
         <app-clutter-voting-card *ngFor="let clutter of (clutterPending$ | async)"
