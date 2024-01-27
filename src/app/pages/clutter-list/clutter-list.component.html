@@ -30,12 +30,10 @@
         ></app-finalised-vote-card>
     </mat-tab>
     <mat-tab label="Mixed Results">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterMixedResults$ | async)"
+        <app-mixed-vote-card
+            *ngFor="let clutter of (clutterMixedResults$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="true" 
-            [showYourVote]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-mixed-vote-card>
     </mat-tab>
     <mat-tab label="Your Votes">
         <app-clutter-voting-card *ngFor="let clutter of (clutterYourVotes$ | async)"
