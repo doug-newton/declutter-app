@@ -35,6 +35,7 @@ import { FamilyEditComponent } from './pages/family-edit/family-edit.component';
 import { NoFamilyMessageComponent } from './ui/no-family-message/no-family-message.component';
 import { ClutterEditComponent } from './ui/clutter-edit/clutter-edit.component';
 import { ClutterVoteCardComponent } from './ui/clutter-cards/clutter-vote-card/clutter-vote-card.component';
+import { FamilyToVoteCardComponent } from './ui/clutter-cards/family-to-vote-card/family-to-vote-card.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ClutterVoteCardComponent } from './ui/clutter-cards/clutter-vote-card/c
     FamilyEditComponent,
     NoFamilyMessageComponent,
     ClutterEditComponent,
-    ClutterVoteCardComponent
+    ClutterVoteCardComponent,
+    FamilyToVoteCardComponent
   ],
   imports: [
     BrowserModule,

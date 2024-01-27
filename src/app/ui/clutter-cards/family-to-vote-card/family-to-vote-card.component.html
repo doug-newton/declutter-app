@@ -1,0 +1,21 @@
+<mat-card *ngIf="vm$ | async as vm">
+    <mat-card-header>
+        <mat-card-title>{{vm.clutter.name}}
+        </mat-card-title>
+        <mat-card-subtitle>added by {{vm.clutter.addedBy.name}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{vm.clutter.description}}
+        <ng-container *ngIf="vm.clutter.membersVoted.length > 0">
+            <br>
+            <span>voted: </span>
+            <mat-chip *ngFor="let member of vm.clutter.membersVoted">{{member.name}}</mat-chip>
+        </ng-container>
+        
+        <ng-container *ngIf="vm.clutter.membersToVote.length > 0">
+            <br>
+            <span>to vote: </span>
+            <mat-chip *ngFor="let member of vm.clutter.membersToVote">{{member.name}}</mat-chip>
+        </ng-container>
+    </mat-card-content>
+</mat-card>

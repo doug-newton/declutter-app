@@ -12,12 +12,10 @@
         ></app-clutter-vote-card>
     </mat-tab>
     <mat-tab label="Family to vote">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterPending$ | async)"
+        <app-family-to-vote-card
+            *ngFor="let clutter of (clutterPending$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false"
-            [showEditButtons]="false"
-            [showWhoVoted]="true"
-            ></app-clutter-voting-card>
+        ></app-family-to-vote-card>
     </mat-tab>
     <mat-tab label="Keep">
         <app-clutter-voting-card *ngFor="let clutter of (clutterToKeep$ | async)"
