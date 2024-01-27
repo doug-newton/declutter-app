@@ -18,20 +18,16 @@
         ></app-family-to-vote-card>
     </mat-tab>
     <mat-tab label="Keep">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterToKeep$ | async)"
+        <app-finalised-vote-card
+            *ngFor="let clutter of (clutterToKeep$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false" 
-            [showYourVote]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-finalised-vote-card>
     </mat-tab>
     <mat-tab label="Discard">
-        <app-clutter-voting-card *ngFor="let clutter of (clutterToDiscard$ | async)"
+        <app-finalised-vote-card
+            *ngFor="let clutter of (clutterToDiscard$ | async)"
             [clutterId]="clutter._id" 
-            [showVoteCounts]="false" 
-            [showYourVote]="false"
-            [showEditButtons]="false"
-            ></app-clutter-voting-card>
+        ></app-finalised-vote-card>
     </mat-tab>
     <mat-tab label="Mixed Results">
         <app-clutter-voting-card *ngFor="let clutter of (clutterMixedResults$ | async)"
