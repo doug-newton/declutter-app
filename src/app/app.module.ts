@@ -25,7 +25,7 @@ import { CreateFamilyComponent } from './pages/create-family/create-family.compo
 
 import { ManageClutterItemComponent } from './ui/manage-clutter-item/manage-clutter-item.component';
 import { ClutterFormComponent } from './ui/clutter-form/clutter-form.component';
-import { ClutterVotingCardComponent } from './ui/clutter-voting-card/clutter-voting-card.component';
+import { EditableClutterCard } from './ui/editable-clutter-card/editable-clutter-card.component';
 import { FamilyFormComponent } from './ui/family-form/family-form.component';
 import { FamilyViewComponent } from './pages/family-view/family-view.component';
 
@@ -50,7 +50,7 @@ import { YourVoteCardComponent } from './ui/clutter-cards/your-vote-card/your-vo
     ClutterListComponent,
     ManageClutterItemComponent,
     ClutterFormComponent,
-    ClutterVotingCardComponent,
+    EditableClutterCard,
     CreateFamilyComponent,
     FamilyFormComponent,
     FamilyViewComponent,

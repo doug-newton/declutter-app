@@ -9,13 +9,13 @@ export class ManageClutterItemComponent {
 
   @Input({ required: true }) clutterId: string
 
-  mode: 'VOTE' | 'EDIT' = 'VOTE'
+  mode: 'VIEW' | 'EDIT' = 'VIEW'
 
   onChangeToEditMode() {
     this.mode = 'EDIT'
   }
 
   onChangeToVoteMode() {
-    this.mode = 'VOTE'
+    this.mode = 'VIEW'
   }
 }

@@ -4,11 +4,11 @@ import { ClutterService } from '../../shared/services/clutter.service';
 import { Clutter } from '../../shared/models';
 
 @Component({
-  selector: 'app-clutter-voting-card',
-  templateUrl: './clutter-voting-card.component.html',
-  styleUrl: './clutter-voting-card.component.scss'
+  selector: 'app-editable-clutter-card',
+  templateUrl: './editable-clutter-card.component.html',
+  styleUrl: './editable-clutter-card.component.scss'
 })
-export class ClutterVotingCardComponent implements OnChanges {
+export class EditableClutterCard implements OnChanges {
 
   constructor(
     private clutterService: ClutterService
