@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-clutter-list-item',
-  templateUrl: './clutter-list-item.component.html',
-  styleUrl: './clutter-list-item.component.scss'
+  selector: 'app-manage-clutter-item',
+  templateUrl: './manage-clutter-item.component.html',
+  styleUrl: './manage-clutter-item.component.scss'
 })
-export class ClutterListItemComponent {
+export class ManageClutterItemComponent {
 
   @Input({ required: true }) clutterId: string
   @Input() showVoteCounts: boolean = true
